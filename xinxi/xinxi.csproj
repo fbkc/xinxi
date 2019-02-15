@@ -74,6 +74,7 @@
     <Content Include="handler\MainHandler.ashx" />
     <Content Include="handler\ModelHandler.ashx" />
     <Content Include="handler\TestHandler.ashx" />
+    <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -117,7 +118,7 @@
     <Content Include="templates\BAPage.html" />
     <Content Include="templates\bs.html" />
     <Content Include="templates\DetailModel.html" />
-    <Content Include="templates\DetailPage.html" />
+    <Content Include="DetailPage.html" />
     <Content Include="templates\foot.html" />
     <Content Include="templates\head.html" />
     <Content Include="templates\HtmlPage1.html" />
@@ -157,6 +158,7 @@
     <Compile Include="Tools.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="statics\js\images\" />
     <Folder Include="statics\js\skin\" />
   </ItemGroup>
   <PropertyGroup>
