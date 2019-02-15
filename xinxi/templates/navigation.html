@@ -1,0 +1,8 @@
+﻿<div class="nav">
+    <ul>
+        #foreach($c in $data.columnsList)
+        <li><a href="TestHandler.ashx?action=GetProduct&cId=$c.Id" title="$c.columnName">$c.columnName</a></li>
+        #end
+        #end
+    </ul>
+</div>

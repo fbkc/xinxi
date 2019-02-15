@@ -1,0 +1,71 @@
+﻿#parse("head.html")
+#parse("navigation.html")
+<link href="http://hyzx.100dh.cn/statics/css/slide.css" rel="stylesheet" type="text/css" />
+<script src="http://hyzx.100dh.cn/statics/js/responsiveslides.min.js"></script>
+<script src="http://hyzx.100dh.cn/statics/js/slide.js"></script>
+<style type="text/css">
+    .slide_nav {
+        display: none;
+    }
+
+    .swtuijian-r ul li {
+        font-size: 14px;
+    }
+</style>
+<div class="layout mgb10 clearfix">
+    <div class="hotwords-tl">
+        <h4>推荐新闻</h4>
+    </div>
+    <div class="swtuijian-e">
+        <div class="swhuandeng" style="height:205px;margin-top: 3px;">
+            <div class="slide_container">
+                <ul class="rslides" id="slider">
+                    #foreach($h in $data.lunboTitle)
+                    <li>
+                        <a href="$h.titleURL" target="_blank">
+                            <img src="$h.titleImg" onerror="this.src = 'http://hyzx.100dh.cn/statics/images/nopic.gif'" />
+                            <p class="caption">$h.title</p>
+                        </a>
+                    </li>
+                    #end
+                </ul>
+            </div>
+        </div>
+        <div class="swtuijian-r" style="margin-top: 10px;">
+            <ul>
+                #foreach($h in $data.tuijianTitle)
+                <li><a href="$h.titleURL" title="$h.title" target="_blank">·$h.title</a></li>
+                #end
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="lists">
+    <div class="list1">
+        <div class="hotwords-tl">
+            <h4>最新产品</h4>
+        </div>
+        <div class="list1-e">
+            <ul>
+                #foreach($h in $data.productTitle)
+                <li><a href="$h.titleURL" title="$h.title" target="_blank">·$h.title</a></li>
+                #end
+            </ul>
+            <div class="listmore"><a href="http://hyzx.100dh.cn/handler/TestHandler.ashx?action=MoreProduct" target="_blank">更多产品</a></div>
+        </div>
+    </div>
+    <div class="list2">
+        <div class="hotwords-tl">
+            <h4>最新新闻</h4>
+        </div>
+        <div class="list1-e">
+            <ul>
+                #foreach($h in $data.newsTitle)
+                <li><a href="$h.titleURL" title="$h.title" target="_blank">·$h.title</a></li>
+                #end
+            </ul>
+            <div class="listmore"><a href="http://hyzx.100dh.cn/handler/TestHandler.ashx?action=MoreNews" target="_blank">更多新闻</a></div>
+        </div>
+    </div>
+</div>
+#parse("foot.html")

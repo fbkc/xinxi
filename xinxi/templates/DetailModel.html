@@ -1,0 +1,119 @@
+﻿#parse("head.html")
+<div class="swdh">
+    当前位置：<a href="http://hyzx.100dh.cn/handler/TestHandler.ashx?action=MainPage">首页</a><span> &gt; </span>
+    <a href="http://hyzx.100dh.cn/handler/TestHandler.ashx?action=MoreProduct">产品栏目</a> >
+    <a href="http://hyzx.100dh.cn/handler/TestHandler.ashx?action=GetProduct&cId=$data.cId">$data.columnName</a> >  正文
+</div>
+    #parse("navigation.html")
+<div class="swnr" style="margin-top: 0px;">
+    <div class="swnr-l" id="article_details">
+        <div class="neirong1">
+            <h1 style="font-size:20px; font-weight:100; color:#000; padding-top:15px; padding-bottom:10px;">$data.hInfo.title</h1>
+            <p style="color:#999; font-size:13px;">$data.hInfo.addTime<span style="margin-left:5px;margin-right:5px;">|</span>来自: 网络</p>
+        </div>
+        <div style="background:url(http://hyzx.100dh.cn/statics/images/dot.png); height:2px; margin-top:15px; margin-bottom:15px;"></div>
+        <div class="neirong3">
+            <style>
+                .gqinfo {
+                    width: 100%;
+                    height: 200px;
+                    padding-bottom: 40px;
+                    border-bottom: 1px dotted #CCC;
+                    margin-bottom: 30px;
+                }
+
+                .gqinfo-l {
+                    width: 200px;
+                    height: 200px;
+                    float: left;
+                    margin-top: 10px;
+                }
+
+                    .gqinfo-l ul li {
+                        line-height: 32px;
+                        font-size: 16px;
+                    }
+
+                .gfinfo-r {
+                    width: 400px;
+                    height: 200px;
+                }
+
+                .gqinfo-r img {
+                    display: block;
+                    width: 400px;
+                    height: 200px;
+                }
+            </style>
+            <div class="gqinfo">
+                <div class="gqinfo-l" style="float: right;">
+                    <ul>
+                        <li><b>品牌：</b>$data.hInfo.pinpai</li>
+                        <li><b>单价：</b>$data.hInfo.price</li>
+                        <li><b>起订量：</b>$data.hInfo.smallCount</li>
+                        <li><b>供货总量：</b>$data.hInfo.sumCount</li>
+                        <li><b>产品型号：</b>$data.hInfo.xinghao</li>
+                        <li><b>生产城市：</b>$data.hInfo.city</li>
+                        <li><b>计量单位：</b>$data.hInfo.unit</li>
+                    </ul>
+                </div>
+                <div class="gqinfo-r">
+                    <img src="$data.hInfo.titleImg" alt="$data.hInfo.title" width="400" height="200" onerror="this.src='http://hyzx.100dh.cn/statics/images/nopic.gif'" />
+                </div>
+            </div>
+            <div style="width:100%; overflow:hidden;" class="article_content">$data.hInfo.articlecontent</div>
+        </div>
+        <div class="neirong4" style="overflow:hidden;margin-top: 10px;">
+            <ul>
+                <!--<li>上一篇：<a href="$data.BPage.Href">$data.BPage.Title</a></li>-->
+                <li>
+                    <script language=javascript src='http://hyzx.100dh.cn/handler/BAHandler.ashx?cId=$data.hInfo.columnId&Id=$data.hInfo.Id'></script>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="swnr-r">
+        <div class="fixed">
+            <script language=javascript src='http://tool.100dh.cn/rightPageHandler.ashx?uname=$data.hInfo.username'></script>
+            <!--动态的，每小时更新一次-->
+            <div class="col-wrap">
+                <h3>公司产品</h3>
+                <ul class="iconBox">
+                    #foreach($h in $data.ProductFloat)
+                    <li><a href="$h.titleURL">$h.title</a></li>
+                    #end
+                </ul>
+            </div>
+        </div>
+        <div class="col-wrap">
+            <h3>企业新闻</h3>
+            <ul class="iconBox">
+                #foreach($h in $data.NewsFloat)
+                <li><a href="$h.titleURL">$h.title</a></li>
+                #end
+            </ul>
+        </div>
+        <!--动态的，每小时更新一次-->
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function (e) {
+        t = $('.fixed').offset().top; mh = $('#article_details').height();
+        fh = $('.fixed').height();
+        $(window).scroll(function (e) {
+            s = $(document).scrollTop();
+            if (s > t + 100) {
+                $('.fixed').css('position', 'fixed');
+                $('.fixed').addClass('shadow');
+                $('.swnr-r').css('padding-top', (fh + 150) + 'px');
+                if (s + fh > mh) { $('.fixed').css('top', mh - s - fh + 'px'); }
+                else { $('.fixed').css('top', '0px'); }
+            } else {
+                $('.fixed').removeClass('shadow');
+                $('.fixed').css('position', '');
+                $('.swnr-r').css('padding-top', '0px');
+            }
+        })
+    });
+</script>
+#parse("foot.html")
