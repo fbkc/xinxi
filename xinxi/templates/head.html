@@ -10,8 +10,8 @@
     <meta http-equiv="Cache-Control" content="no-transform" />
     <link rel="stylesheet" href="http://xinxi.100dh.cn/statics/css/style11.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="http://xinxi.100dh.cn/statics/css/kefu.css" />
-    <script type="text/javascript" src="http://xinxi.100dh.cn/statics/js/jquery.min.js"></script>
-    <script type="text/javascript" src="http://xinxi.100dh.cn/statics/js/gotop.js"></script>
+    <script type="text/javascript" src="http://xinxi.100dh.cn/statics/js/skin/jquery.min.js"></script>
+    <script type="text/javascript" src="http://xinxi.100dh.cn/statics/js/skin/gotop.js"></script>
     <?php include_once("baidu_js_push.php") ?>
     <script type="text/javascript">
         var Tool = { 'host': '$data.host', 'Catid': '$data.hInfo.columnId', 'Id': '$data.hInfo.Id', 'logged': false };
@@ -20,12 +20,15 @@
 </head>
 <body>
     <div class="head">
-        <div class="logo"><a href="#"><img src="http://xinxi.100dh.cn/statics/images/jal.jpg" title="jal" alt="100dh快收" width="230" height="60"/></a></div>
+        <div class="logo"><a href="#"><img src="http://xinxi.100dh.cn/statics/images/jal.jpg" title="jal" alt="100dh快收" width="230" height="60" /></a></div>
         <div class="search">
-            <form action="#" name="formsearch">
-                <input type="hidden" name="kwtype" value="0" />
-                <input name="keyword" type="text" class="search-keyword fl" id="search-keyword" value="请输入关键词" onfocus="if(this.value=='请输入关键词'){this.value='';}" onblur="if(this.value==''){this.value='请输入关键词';}" />
-                <button type="submit" class="search-submit fl">搜 索</button>
-            </form>
+            <!--<form action="#" name="formsearch">-->
+            <input type="hidden" name="kwtype" value="0" />
+            <input name="keyword" type="text" class="search-keyword fl" id="search-keyword" value="请输入关键词" onfocus="if(this.value=='请输入关键词'){this.value='';}" onblur="if(this.value==''){this.value='请输入关键词';}" />
+            <button type="submit" class="search-submit fl">搜 索</button>
+            <!--</form>-->
+        </div>
+        <div class="login">
+            <a href="http://vip.100dh.cn/login" target="_blank">会员登录</a>
         </div>
     </div>

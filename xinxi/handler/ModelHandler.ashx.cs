@@ -98,14 +98,17 @@ namespace xinxi
                 else
                     keyword = hInfo.title;
                 description = BLL.ReplaceHtmlTag(hInfo.articlecontent, 80);//产品简介
+                List<htmlPara> pList = bll.GetHtmlBAPage(cid, htmlId.ToString());//上一篇，下一篇
                 var data = new
                 {
-                    title = hInfo.title + "_" + hInfo.companyName,
+                    htmlTitle = hInfo.title + "_" + hInfo.companyName,
                     hInfo,
                     keyword,
                     description,
                     host,
-                    columnName=bll.GetColumns(" where Id="+cid)[0].columnName,
+                    columnName = bll.GetColumns(" where Id=" + cid)[0].columnName,
+                    columnsList = bll.GetColumns(""),//导航
+                    BPage = new { Href = pList[0].titleURL, Title = pList[0].title },//上一篇
                     ProductFloat = bll.GetProFloat(hInfo.userId),
                     NewsFloat = bll.GetNewsFloat(hInfo.userId)
                 };

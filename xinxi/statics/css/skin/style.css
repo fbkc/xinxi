@@ -92,6 +92,18 @@ body {
     width: 270px;
 }
 
+.i_notice {
+    height: 49px;
+    line-height: 49px;
+    border-bottom: 1px solid #cecece;
+    background: url ("images/i_notice_ii.gif") left no-repeat;
+    padding-left: 24px;
+}
+
+    .i_notice span {
+        color: red;
+    }
+
 .search {
     float: left;
     height: 38px;
@@ -123,16 +135,6 @@ body {
     padding: 0;
     font-family: 'microsoft yahei';
     background: #CC0000;
-}
-
-.login {
-    height: 38px;
-    width: 86px;
-    line-height: 38px;
-    text-align: center;
-    margin: 0;
-    padding: 0;
-    font-family: 'microsoft yahei';
 }
 
 .share {
@@ -227,6 +229,59 @@ body {
     border: 1px #e1e1e1 solid;
     border-top: 2px #CC0000 solid;
 }
+
+
+.e_difference li {
+    float: left;
+    width: 220px;
+    text-align: center;
+    margin: 5px;
+}
+
+.seo_bg {
+    padding-top: 30px;
+    padding-bottom: 30px;
+    background-color: #f8f8f8;
+}
+
+.seo_l {
+    float: left;
+    width: 250px;
+    padding: 0 40px;
+}
+
+.seo_c {
+    float: left;
+    width: 250px;
+    border-left: 1px solid #ccc;
+    padding: 0 40px;
+}
+
+.seo_r {
+    float: right;
+    width: 250px;
+    border-left: 1px solid #ccc;
+    padding: 0 40px;
+}
+
+.seo_top {
+    height: 40px;
+    line-height: 40px;
+    font-size: 16px;
+    font-family: "Microsoft YaHei",Arial, Helvetica, sans-serif;
+}
+
+.seo_list li {
+    height: 30px;
+    line-height: 30px;
+}
+
+    .seo_list li span {
+        float: right;
+        color: #999;
+    }
+
+
 /*--/主体 end--*/
 .left_1 {
     float: left;
@@ -849,7 +904,6 @@ body {
 .b_box1 {
     line-height: 27px;
     padding-top: 2px;
-    background: url(images/bg_2.jpg) 0 11px no-repeat;
 }
 
     .b_box1 li {
