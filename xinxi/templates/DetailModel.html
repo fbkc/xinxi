@@ -35,7 +35,7 @@
     <div class="ban_1001"></div>
     <div class="weizhi">
         您的当前位置：<a href='http://xinxi.100dh.cn/handler/TestHandler.ashx?action=MainPage'>主页</a> >
-        <a href='http://hyzx.100dh.cn/xinxi/handler/TestHandler.ashx?action=GetProduct&cId=$data.hInfo.columnId'>$data.columnName</a> >
+        <a href='http://xinxi.100dh.cn/handler/TestHandler.ashx?action=GetProduct&cId=$data.hInfo.columnId'>$data.columnName</a> >
         正文
     </div>
     <div class="main1">
@@ -53,9 +53,7 @@
             </div>
         </div>
         <div class="right_1">
-            <div class="g_box2 u_2">
-                <script language=javascript src='http://tool.100dh.cn/rightPageHandler.ashx?uname=$data.hInfo.username'></script>
-            </div>
+            <script language=javascript src='http://tool.100dh.cn/rightPageHandler.ashx?uname=$data.hInfo.username'></script>
             <div class="g_box2 u_2">
                 <div class="t_1">相关产品</div>
                 <ul class="b_box3 u_1">
@@ -66,7 +64,8 @@
             </div>
             <div class="g_box2 u_2">
                 <div class="t_1">最新新闻</div>
-                <ul class="b_box1">
+                <ul class="b_box3 u_1">
+                    <!--b_box1-->
                     #foreach($h in $data.NewsFloat)
                     <li><a href="$h.titleURL">$h.title</a></li>
                     #end
@@ -77,3 +76,5 @@
         <div class="clear"></div>
     </div>
     #parse("foot.html")
+</body>
+</html>

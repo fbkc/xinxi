@@ -93,7 +93,6 @@
     <Content Include="statics\css\images\style.css" />
     <Content Include="statics\css\kefu.css" />
     <Content Include="statics\css\skin\style.css" />
-    <Content Include="statics\css\style.css" />
     <Content Include="statics\css\style11.css" />
     <Content Include="statics\css\images\type.css" />
     <Content Include="statics\images\favicon.ico" />
@@ -117,7 +116,6 @@
     <Content Include="statics\public\jquery.min.js" />
     <Content Include="templates\404.html" />
     <Content Include="templates\BAPage.html" />
-    <Content Include="templates\bs.html" />
     <Content Include="DetailPage.html" />
     <Content Include="templates\foot.html" />
     <Content Include="templates\head.html" />

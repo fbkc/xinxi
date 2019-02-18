@@ -130,9 +130,9 @@ body {
     width: 86px;
     line-height: 38px;
     text-align: center;
-    margin: 0;
-    padding: 0;
+    margin: 10px;
     font-family: 'microsoft yahei';
+    float: right;
 }
 
 .share {
@@ -142,7 +142,8 @@ body {
 
 .nav {
     width: 100%;
-    margin: 0 auto 10px auto;
+    height: 90px;
+    margin: 0 auto 0 auto;
     background: #CC0000;
 }
 
@@ -250,19 +251,39 @@ body {
     border-bottom: 1px #e1e1e1 solid;
 }
 
-    .t_1 h3 {
-        font-weight: bold;
+.t_comName {
+    height: 35px;
+    overflow: hidden;
+    padding: 0 5px;
+    color: black;
+    font-weight: bold;
+    font-size: 15px;
+    line-height: 35px;
+}
+
+.t_comTxt {
+}
+
+    .t_comTxt li {
+        height: 27px;
+        overflow: hidden;
+        padding-top: 5px;
+        padding-left: 5px;
     }
 
-    .t_1 span {
-        float: right;
-        font-size: 12px;
-        font-weight: normal;
-    }
+.t_1 h3 {
+    font-weight: bold;
+}
 
-        .t_1 span a {
-            color: #777;
-        }
+.t_1 span {
+    float: right;
+    font-size: 12px;
+    font-weight: normal;
+}
+
+    .t_1 span a {
+        color: #777;
+    }
 
 .t_2 {
     height: 40px;
@@ -855,7 +876,7 @@ body {
     .b_box1 li {
         height: 27px;
         overflow: hidden;
-        padding-left: 27px;
+        padding-left: 8px;
         border-bottom: 1px #e1e1e1 dotted;
     }
 
