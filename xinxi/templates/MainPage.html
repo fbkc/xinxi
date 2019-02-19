@@ -1,20 +1,21 @@
 ﻿#parse("head.html")
 #parse("navigation.html")
-<div class="layui-row pbin clearfix">
-    <h4>产品信息</h4>
-    <ul class="clearfix">
-        <li><span>【2018-12-26】</span> <a href="http://www.53info.com/wsnews/akaiaojx07/show_1230522.htm" target="_blank" title="菏泽液压岩石劈裂机视频开挖孔桩坚硬岩石头" class="in-huik-ti">菏泽液压岩石劈裂机视频开挖孔桩坚硬岩石头</a> </li>
-    </ul>
+<div class="mainpage">
+    <div class="mainpage_list">
+        <div class="t_10">产品信息</div>
+        <ul>
+            #foreach($p in $data.productTitle)
+            <li><a href="$p.titleURL" target="_blank" title="$p.title" class="in-huik-ti">$p.title</a>&nbsp;&nbsp;&nbsp;<span>【$p.addTime】</span></li>
+            #end
+        </ul>
+    </div>
+    <div class="mainpage_list">
+        <div class="t_10">最新资讯</div>
+        <ul>
+            #foreach($n in $data.newsTitle)
+            <li><a href="$n.titleURL" target="_blank" title="$n.title" class="in-huik-ti">$n.title</a>&nbsp;&nbsp;&nbsp;<span>【$n.addTime】</span></li>
+            #end
+        </ul>
+    </div>
 </div>
-<div class="layui-row pbin clearfix">
-    <h4>最新资讯</h4>
-    <ul class="clearfix">
-        <li>
-            <span>【2018-12-26】</span>
-            <a href="http://www.53info.com/wsnews/akaiaojx07/shows_1230518.htm" target="_blank" title="七台河破石头快工具图片破除拆混泥土" class="in-huik-ti">七台河破石头快工具图片破除拆混泥土</a>
-        </li>
-    </ul>
-</div>
-</div>
-
 #parse("foot.html")

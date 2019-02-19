@@ -93,10 +93,10 @@ namespace xinxi
                 hostName,
                 hostUrl,
                 columnsList = bll.GetColumns(""),//导航
-                lunboTitle = GetParaByCId("20", 1, 6),//轮播标题，推荐新闻
-                tuijianTitle = GetNoNewsByCId("12", "20"),//推荐产品
-                productTitle = GetNoNewsByCId("30", "20"),//最新产品，无分类
-                newsTitle = GetParaByCId("20", 1, 30)//最新新闻
+                //lunboTitle = GetParaByCId("20", 1, 6),//轮播标题，推荐新闻
+                //tuijianTitle = GetNoNewsByCId("12", "20"),//推荐产品
+                productTitle = GetNoNewsByCId("50", "20"),//最新产品，无分类
+                newsTitle = GetParaByCId("20", 1, 50)//最新新闻
             };
             return SqlHelperCatalog.WriteTemplate(data, "MainPage.html");
         }

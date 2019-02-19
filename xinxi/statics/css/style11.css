@@ -81,7 +81,7 @@ body {
         }
 
 .head {
-    width: 1000px;
+    width: 60%;
     height: 60px;
     padding: 20px 0;
     margin: 0 auto;
@@ -96,7 +96,7 @@ body {
     float: left;
     height: 38px;
     width: 454px;
-    padding: 11px 0;
+    padding: 11px 100px;
 }
 
 .search-keyword {
@@ -132,7 +132,7 @@ body {
     text-align: center;
     margin: 10px;
     font-family: 'microsoft yahei';
-    float: right;
+    float: left;
 }
 
 .share {
@@ -148,7 +148,7 @@ body {
 }
 
     .nav ul {
-        width: 1000px;
+        width: 60%;
         height: 45px;
         line-height: 45px;
         font-size: 14px;
@@ -208,16 +208,56 @@ body {
         background: url(images/ico_4.jpg) 0 13px no-repeat;
     }
 
+/*--/top end--*/
+
+.mainpage {
+    margin-bottom: 20px;
+}
+
+.mainpage_list {
+    width: 60%;
+    height: 500px;
+    overflow: hidden;
+    margin: auto;
+    padding: 10px;
+}
+
+.t_10 {
+    height: 33px;
+    line-height: 33px;
+    font-size: 14px;
+    font-family: 'microsoft yahei';
+    font-weight: bold;
+    border-bottom: 1px #e1e1e1 solid;
+    padding-left: 15px;
+}
+
+.mainpage_list ul {
+    display: block;
+    list-style-type: disc;
+    padding: 15px 0px 0px 15px;
+}
+
+.mainpage_list li {
+    float: left;
+    width: 45%;
+    padding: 5px 20px;
+}
+
+.mainpage_list span {
+    float: right;
+}
+/*--/mainpage end--*/
+
 .weizhi {
-    width: 1000px;
+    width: 60%;
     margin: 0 auto 10px auto;
     line-height: 18px;
     text-indent: 20px;
     background: url(images/ico_5.png) 0 2px no-repeat;
 }
-/*--/top end--*/
 .main1 {
-    width: 1000px;
+    width: 60%;
     margin: 0 auto;
 }
 
@@ -229,15 +269,16 @@ body {
     border-top: 2px #CC0000 solid;
 }
 /*--/主体 end--*/
+
 .left_1 {
     float: left;
-    width: 750px;
+    width: 70%;
     overflow: hidden;
 }
 
 .right_1 {
     float: right;
-    width: 250px;
+    width: 30%;
     overflow: hidden;
     margin-bottom: 10px;
 }
@@ -265,7 +306,6 @@ body {
 }
 
     .t_comTxt li {
-        height: 27px;
         overflow: hidden;
         padding-top: 5px;
         padding-left: 5px;
@@ -568,7 +608,7 @@ body {
     }
 
 .g_list {
-    width: 738px;
+    width: 99%;
     border: 1px #e1e1e1 solid;
     border-top: 2px #CC0000 solid;
     overflow: hidden;
@@ -727,7 +767,7 @@ body {
         }
 
 .g_con {
-    width: 708px;
+    width: 95%;
     padding: 0 15px 15px 15px;
     border: 1px #e1e1e1 solid;
     border-top: 2px #CC0000 solid;
@@ -766,11 +806,11 @@ body {
         }
 
     .g_con .con {
-        width: 688px;
+        width: 95%;
         overflow: hidden;
         line-height: 28px;
         font-size: 14px;
-        padding: 0 0 15px 0;
+        padding: 0px 15px 0 20px;
     }
 
         .g_con .con p, .g_con .con div {
@@ -1127,6 +1167,7 @@ body {
 .u_2 {
     height: auto;
     margin-bottom: 10px;
+    padding-bottom:10px;
 }
 
 .u_3 {
