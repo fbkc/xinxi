@@ -18,7 +18,7 @@ namespace xinxi
     /// </summary>
     public class TestHandler : IHttpHandler
     {
-        private string hostName = "100导航";
+        private string hostName = "讯收录";
         private string hostUrl = "http://xinxi.100dh.cn/";
         public void ProcessRequest(HttpContext context)
         {
@@ -63,13 +63,13 @@ namespace xinxi
                     keyword = hInfo.title;
                 var data = new
                 {
-                    title = hInfo.title + "_" + hInfo.companyName,
+                    htmlTitle = hInfo.title + "_" + hInfo.companyName,
                     hInfo,
                     keyword,
                     description = BLL.ReplaceHtmlTag(hInfo.articlecontent, 80),//产品简介
                     host = hostUrl,
                     ProductFloat = bll.GetProFloat(hInfo.userId),
-                    NewsFloat= bll.GetNewsFloat(hInfo.userId)
+                    NewsFloat = bll.GetNewsFloat(hInfo.userId)
                 };
                 string html = SqlHelperCatalog.WriteTemplate(data, "DetailModel.html");
                 return html;
@@ -93,10 +93,11 @@ namespace xinxi
                 hostName,
                 hostUrl,
                 columnsList = bll.GetColumns(""),//导航
+                productTitle = GetNoNewsByCId("50", "20"),//最新产品，无分类
+                newsTitle = GetParaByCId("20", 1, 50)//最新新闻 
+
                 //lunboTitle = GetParaByCId("20", 1, 6),//轮播标题，推荐新闻
                 //tuijianTitle = GetNoNewsByCId("12", "20"),//推荐产品
-                productTitle = GetNoNewsByCId("50", "20"),//最新产品，无分类
-                newsTitle = GetParaByCId("20", 1, 50)//最新新闻
             };
             return SqlHelperCatalog.WriteTemplate(data, "MainPage.html");
         }
@@ -128,14 +129,21 @@ namespace xinxi
             {
                 pageData[i] = new { Href = "http://xinxi.100dh.cn/handler/TestHandler.ashx?action=GetProduct&cId=" + cId + "&pageIndex=" + (i + 1), Title = i + 1 };
             }
+            string columnName = "";
+            List<columnInfo> columnsList = bll.GetColumns("");//导航
+            foreach (columnInfo c in columnsList)
+            {
+                if (c.Id.ToString() == cId)
+                    columnName = c.columnName;
+            }
             var data = new
             {
-                htmlTitle = "产品栏目",
+                htmlTitle = columnName + "_" + hostName,
                 hostName,
                 hostUrl,
                 cId,
-                columnsList = bll.GetColumns(""),//导航
-                columnName = bll.GetColumns("where Id=" + cId)[0].columnName,
+                columnsList,//导航
+                columnName,//栏目名称
                 paraTotal,//总条数
                 pageIndex,//当前页
                 pageData,//页码渲染
