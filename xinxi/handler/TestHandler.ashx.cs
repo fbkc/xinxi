@@ -162,16 +162,19 @@ namespace xinxi
             {
                 if (pageIndex > 4)
                 {
-                    for (int i = pageIndex - 5; i < pageIndex+4; i++)
+                    int maxIndex = pageIndex + 4;
+                    if (maxIndex > pageCount)
+                        maxIndex = pageCount;
+                    for (int i = pageIndex - 5; i < maxIndex; i++)
                     {
-                        pageData[i] = new { Href = "http://xinxi.100dh.cn/handler/TestHandler.ashx?action=GetProduct&cId=" + cId + "&pageIndex=" + (i + 1), Title = i + 1 };
+                        pageData.Add(new { Href = "http://xinxi.100dh.cn/handler/TestHandler.ashx?action=GetProduct&cId=" + cId + "&pageIndex=" + (i + 1), Title = i + 1 });
                     }
                 }
                 else
                 {
                     for (int i = 0; i < 9; i++)
                     {
-                        pageData[i] = new { Href = "http://xinxi.100dh.cn/handler/TestHandler.ashx?action=GetProduct&cId=" + cId + "&pageIndex=" + (i + 1), Title = i + 1 };
+                        pageData.Add(new { Href = "http://xinxi.100dh.cn/handler/TestHandler.ashx?action=GetProduct&cId=" + cId + "&pageIndex=" + (i + 1), Title = i + 1 });
                     }
                 }
             }
@@ -179,7 +182,7 @@ namespace xinxi
             {
                 for (int i = 0; i < pageCount; i++)
                 {
-                    pageData[i] = new { Href = "http://xinxi.100dh.cn/handler/TestHandler.ashx?action=GetProduct&cId=" + cId + "&pageIndex=" + (i + 1), Title = i + 1 };
+                    pageData.Add(new { Href = "http://xinxi.100dh.cn/handler/TestHandler.ashx?action=GetProduct&cId=" + cId + "&pageIndex=" + (i + 1), Title = i + 1 });
                 }
             }
             string columnName = "";
