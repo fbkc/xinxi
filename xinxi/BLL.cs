@@ -12,6 +12,27 @@ namespace xinxi
     public class BLL
     {
         /// <summary>
+        /// XML
+        /// </summary>
+        /// <returns></returns>
+        public List<htmlPara> GetXML()
+        {
+            List<htmlPara> hParaList = new List<htmlPara>();
+            DataTable dt = SqlHelperCatalog.ExecuteDataTable("select top 3000 * from htmlPara order by Id desc");
+            if (dt.Rows.Count < 1)
+                return null;
+            foreach (DataRow row in dt.Rows)
+            {
+                htmlPara hPara = new htmlPara();
+                hPara.Id = (long)SqlHelper.FromDBNull(row["Id"]);
+                hPara.titleURL = (string)SqlHelper.FromDBNull(row["titleURL"]);
+                hPara.addTime = ((DateTime)SqlHelper.FromDBNull(row["addTime"])).ToString("yyyy-MM-dd");
+                hParaList.Add(hPara);
+            }
+            return hParaList;
+        }
+
+        /// <summary>
         /// 查找单个用户
         /// </summary>
         /// <param name="sqlstr"></param>

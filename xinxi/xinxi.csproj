@@ -86,8 +86,8 @@
     <Content Include="Global.asax" />
     <Content Include="Newtonsoft.Json.dll" />
     <Content Include="NVelocity.dll" />
-    <Content Include="sitemap.html" />
-    <Content Include="sitemap.xml" />
+    <Content Include="templates\sitemap.html" />
+    <Content Include="templates\sitemap.xml" />
     <Content Include="statics\css\images\bdsstyle.css" />
     <Content Include="statics\css\images\common.css" />
     <Content Include="statics\css\images\style.css" />
@@ -153,6 +153,7 @@
     <Compile Include="SqlHelper.cs" />
     <Compile Include="SqlHelperCatalog.cs" />
     <Compile Include="Tools.cs" />
+    <Compile Include="XmlHelper.cs" />
   </ItemGroup>
   <ItemGroup />
   <PropertyGroup>

@@ -41,12 +41,45 @@ namespace xinxi
                         //case "MoreProduct": _strContent.Append(MoreProduct(context)); break;//更多产品
                         //case "MoreNews": _strContent.Append(MoreNews(context)); break;//更多新闻
                         case "DetailPage": _strContent.Append(DetailPage(context)); break;//渲染动态详情页，伪静态可用
+                        case "sitemapXML": _strContent.Append(SiteMapXML(context)); break;//站点地图XML
+                        case "sitemapHtml": _strContent.Append(SiteMapHtml(context)); break;//站点地图Html
                         default: break;
                     }
                 }
             }
             context.Response.Write(_strContent.ToString());
         }
+
+        /// <summary>
+        /// siteMap XML
+        /// </summary>
+        /// <param name="context"></param>
+        /// <returns></returns>
+        public string SiteMapXML(HttpContext context)
+        {
+            context.Response.ContentType = "application/xml;charset=utf-8";
+            List<htmlPara> hInfo = bll.GetXML();
+            var data = new
+            {
+                hInfo
+            };
+            string html = SqlHelperCatalog.WriteTemplate(data, "sitemap.xml");
+            return html;
+        }
+        /// <summary>
+        /// siteMap Html
+        /// </summary>
+        /// <param name="context"></param>
+        /// <returns></returns>
+        public string SiteMapHtml(HttpContext context)
+        {
+            return MainPage(context);
+        }
+        /// <summary>
+        /// 渲染详情页，伪静态
+        /// </summary>
+        /// <param name="context"></param>
+        /// <returns></returns>
         public string DetailPage(HttpContext context)
         {
             string columnId = context.Request["cId"];
