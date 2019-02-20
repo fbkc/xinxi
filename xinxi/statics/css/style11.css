@@ -256,6 +256,7 @@ body {
     text-indent: 20px;
     background: url(images/ico_5.png) 0 2px no-repeat;
 }
+
 .main1 {
     width: 60%;
     margin: 0 auto;
@@ -1167,7 +1168,7 @@ body {
 .u_2 {
     height: auto;
     margin-bottom: 10px;
-    padding-bottom:10px;
+    padding-bottom: 10px;
 }
 
 .u_3 {
@@ -1379,10 +1380,10 @@ body {
                     }
 
             .dede_pages ul li.thisclass {
-                background-color: #2ca338;
+                background-color: red;
                 padding: 0 10px;
                 color: #fff;
-                border: 1px #2ca338 solid;
+                border: 1px red solid;
             }
 
                 .dede_pages ul li.thisclass a {

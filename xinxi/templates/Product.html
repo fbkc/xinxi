@@ -29,7 +29,7 @@
 
                     #foreach($page in $data.pageData)
                     #if($page.Title==$data.pageIndex)
-                    <li><a href="javascript:void(0)" class="thisclass">$page.Title</a></li>
+                    <li class="thisclass"><a href="javascript:void(0)">$page.Title</a></li>
                     #else
                     <li><a href="$page.Href">$page.Title</a></li>
                     #end

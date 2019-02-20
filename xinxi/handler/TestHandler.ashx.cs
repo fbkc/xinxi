@@ -157,10 +157,30 @@ namespace xinxi
             string cId = context.Request["cId"];
             int paraTotal = bll.GetPageTotal(cId);//此行业总条数
             int pageCount = (int)Math.Ceiling(paraTotal / 20.0);//总页数（每页20条）
-            object[] pageData = new object[pageCount];
-            for (int i = 0; i < pageCount; i++)
+            List<object> pageData = new List<object>();
+            if (pageCount > 8)
             {
-                pageData[i] = new { Href = "http://xinxi.100dh.cn/handler/TestHandler.ashx?action=GetProduct&cId=" + cId + "&pageIndex=" + (i + 1), Title = i + 1 };
+                if (pageIndex > 4)
+                {
+                    for (int i = pageIndex - 5; i < pageIndex+4; i++)
+                    {
+                        pageData[i] = new { Href = "http://xinxi.100dh.cn/handler/TestHandler.ashx?action=GetProduct&cId=" + cId + "&pageIndex=" + (i + 1), Title = i + 1 };
+                    }
+                }
+                else
+                {
+                    for (int i = 0; i < 9; i++)
+                    {
+                        pageData[i] = new { Href = "http://xinxi.100dh.cn/handler/TestHandler.ashx?action=GetProduct&cId=" + cId + "&pageIndex=" + (i + 1), Title = i + 1 };
+                    }
+                }
+            }
+            else
+            {
+                for (int i = 0; i < pageCount; i++)
+                {
+                    pageData[i] = new { Href = "http://xinxi.100dh.cn/handler/TestHandler.ashx?action=GetProduct&cId=" + cId + "&pageIndex=" + (i + 1), Title = i + 1 };
+                }
             }
             string columnName = "";
             List<columnInfo> columnsList = bll.GetColumns("");//导航
