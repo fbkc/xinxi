@@ -35,9 +35,9 @@
                     #end
                     #end
                     #if($data.pageIndex<$data.pageCount) #set($nextPage=$data.pageIndex+1)
-                    <li><a href="$data.hostUrl/list_$data.cId_${nextPage}.html" class="nextpage">下一页</a></li>
+                    <li><a href="$data.hostUrl/list_${data.cId}_${nextPage}.html" class="nextpage">下一页</a></li>
                     #end
-                    <li><a href="$data.hostUrl/list_$data.cId_${data.pageCount}.html">末页</a></li>
+                    <li><a href="$data.hostUrl/list_${data.cId}_${data.pageCount}.html">末页</a></li>
                     <li><span class="pageinfo">共 <strong>$data.pageCount</strong>页<strong>$data.paraTotal</strong>条</span></li>
                 </ul>
             </div>
