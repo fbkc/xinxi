@@ -18,7 +18,7 @@ namespace xinxi
     public class ModelHandler : IHttpHandler
     {
         private BLL bll = new BLL();
-        private string host = "http://hyzx.100dh.cn/xinxi";
+        private string hostUrl = "http://hyzx.100dh.cn/xinxi";
         public void ProcessRequest(HttpContext context)
         {
             context.Response.ContentType = "text/plain";
@@ -70,7 +70,7 @@ namespace xinxi
                 long htmlId = (bll.GetMaxId() + 1);
                 hInfo.Id = htmlId;
                 string showName = "show_" + cid + "_" + htmlId + ".html";
-                url = host + username + "/" + showName;
+                url = hostUrl + "/" + username + "/" + showName;
                 hInfo.titleURL = url;
                 //hInfo.titleURL = string.Format("handler/TestHandler.ashx?action=DetailPage&cId={0}&Id={1}", cid, htmlId);
                 //url = host + hInfo.titleURL;
@@ -105,7 +105,7 @@ namespace xinxi
                     hInfo,
                     keyword,
                     description,
-                    host,
+                    hostUrl,
                     columnName = bll.GetColumns(" where Id=" + cid)[0].columnName,
                     columnsList = bll.GetColumns(""),//导航
                     BPage = new { Href = pList[0].titleURL, Title = pList[0].title },//上一篇
