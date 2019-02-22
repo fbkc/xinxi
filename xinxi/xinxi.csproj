@@ -86,7 +86,7 @@
     <Content Include="Global.asax" />
     <Content Include="Newtonsoft.Json.dll" />
     <Content Include="NVelocity.dll" />
-    <Content Include="templates\sitemap.html" />
+    <Content Include="templates\map.html" />
     <Content Include="templates\sitemap.xml" />
     <Content Include="statics\css\images\bdsstyle.css" />
     <Content Include="statics\css\images\common.css" />
