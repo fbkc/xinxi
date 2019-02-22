@@ -86,6 +86,7 @@
     <Content Include="Global.asax" />
     <Content Include="Newtonsoft.Json.dll" />
     <Content Include="NVelocity.dll" />
+    <Content Include="statics\images\logo.jpg" />
     <Content Include="templates\map.html" />
     <Content Include="templates\sitemap.xml" />
     <Content Include="statics\css\images\bdsstyle.css" />
@@ -96,10 +97,8 @@
     <Content Include="statics\css\style11.css" />
     <Content Include="statics\css\images\type.css" />
     <Content Include="statics\images\favicon.ico" />
-    <Content Include="statics\images\jal.jpg" />
     <Content Include="statics\images\nopic.gif" />
     <Content Include="statics\images\qq.gif" />
-    <Content Include="statics\images\logo.jpg" />
     <Content Include="statics\js\base64.min.js" />
     <Content Include="statics\js\skin\gotop.js" />
     <Content Include="statics\js\gundong.js" />

@@ -18,7 +18,7 @@ namespace xinxi
     /// </summary>
     public class TestHandler : IHttpHandler
     {
-        private string hostName = "讯收录";
+        private string hostName = "赢商云";
         private string hostUrl = "http://hyzx.100dh.cn/xinxi";
         public void ProcessRequest(HttpContext context)
         {
