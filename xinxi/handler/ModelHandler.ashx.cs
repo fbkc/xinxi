@@ -52,7 +52,8 @@ namespace xinxi
             string username = context.Request["username"];
             if (string.IsNullOrEmpty(username))
                 return json.WriteJson(0, "用户名不能为空", new { });
-            string strjson = NetHelper.HttpGet("http://tool.100dh.cn/UserHandler.ashx", username, Encoding.UTF8);//公共接口，调用user信息
+            var obj = new {Id="1" };
+            string strjson = NetHelper.HttpPost("http://tool.100dh.cn/toolWS.asmx", obj.ToString());//公共接口，调用user信息
             var js = new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore };
             cmUserInfo userInfo = JsonConvert.DeserializeObject<cmUserInfo>(strjson, js);
             //时间间隔必须大于60秒
