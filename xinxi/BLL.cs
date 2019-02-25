@@ -63,19 +63,11 @@ namespace xinxi
             userInfo.telephone = (string)row["telephone"];
             userInfo.modile = (string)row["modile"];
             userInfo.ten_qq = (string)row["ten_qq"];
-            userInfo.keyword = (string)row["keyword"];
-            userInfo.pinpai = (string)row["pinpai"];
-            userInfo.xinghao = (string)row["xinghao"];
-            userInfo.price = (string)row["price"];
-            userInfo.smallCount = (string)row["smallCount"];
-            userInfo.sumCount = (string)row["sumCount"];
-            userInfo.unit = (string)row["unit"];
-            userInfo.city = (string)row["city"];
             userInfo.address = (string)row["address"];
             userInfo.com_web = (string)row["com_web"];
             userInfo.companyRemark = (string)row["companyRemark"];
             userInfo.yewu = (string)row["yewu"];
-            userInfo.ziduan1 = (string)row["ziduan1"];
+            userInfo.beforePubTime = (string)row["beforePubTime"];
             return userInfo;
         }
         /// <summary>

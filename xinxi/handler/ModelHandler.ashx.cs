@@ -41,17 +41,35 @@ namespace xinxi
             }
             context.Response.Write(_strContent.ToString());
         }
+        /// <summary>
+        /// 发布系统调用的post接口
+        /// </summary>
+        /// <param name="context"></param>
+        /// <returns></returns>
         public string ModuleHtml(HttpContext context)
         {
             //需要做一个时间，每隔多长时间才允许访问一次
-            string keyValue = NetHelper.GetMD5("liu" + "100dh888");
-            string url = "";
-            string key = context.Request["key"];
-            if (key != keyValue)
-                return json.WriteJson(0, "key值错误", new { });
             string username = context.Request["username"];
             if (string.IsNullOrEmpty(username))
                 return json.WriteJson(0, "用户名不能为空", new { });
+            string strjson = NetHelper.HttpGet("http://tool.100dh.cn/UserHandler.ashx", username, Encoding.UTF8);//公共接口，调用user信息
+            var js = new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore };
+            cmUserInfo userInfo = JsonConvert.DeserializeObject<cmUserInfo>(strjson, js);
+            //时间间隔必须大于60秒
+            DateTime dt = DateTime.Now;
+            DateTime sdt = Convert.ToDateTime(userInfo.beforePubTime);
+            TimeSpan d3 = dt.Subtract(sdt);
+            if (d3.TotalSeconds < 60)
+                return json.WriteJson(0, "信息发布过快，请隔60秒再提交！", new { });
+            //判断今日条数是否达到1000条
+            if(userInfo.endTodayPubCount>999)
+                return json.WriteJson(0, "今日投稿已超过限制数！", new { });
+            //key值判断
+            string keyValue = NetHelper.GetMD5(username + "100dh888");
+            string key = context.Request["key"];
+            if (key != keyValue)
+                return json.WriteJson(0, "key值错误", new { });
+            string url = "";
             try
             {
                 htmlPara hInfo = new htmlPara();
@@ -85,9 +103,9 @@ namespace xinxi
                 hInfo.addTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
                 hInfo.username = username;
                 //公司 / 会员信息
-                cmUserInfo uInfo = bll.GetUser(string.Format("where username='{0}'", username));
-                hInfo.companyName = uInfo.companyName;
-                hInfo.com_web = uInfo.com_web;
+                //cmUserInfo uInfo = bll.GetUser(string.Format("where username='{0}'", username));
+                hInfo.companyName = userInfo.companyName;
+                hInfo.com_web = userInfo.com_web;
                 //hInfo.realmNameId = "1";//发到哪个站
                 bll.AddHtml(hInfo);//存入数据库
 
