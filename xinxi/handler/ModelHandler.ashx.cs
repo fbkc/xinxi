@@ -52,10 +52,15 @@ namespace xinxi
             string username = context.Request["username"];
             if (string.IsNullOrEmpty(username))
                 return json.WriteJson(0, "用户名不能为空", new { });
-            var obj = new {Id="1" };
-            string strjson = NetHelper.HttpPost("http://tool.100dh.cn/toolWS.asmx", obj.ToString());//公共接口，调用user信息
-            var js = new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore };
-            cmUserInfo userInfo = JsonConvert.DeserializeObject<cmUserInfo>(strjson, js);
+            //key值判断
+            string keyValue = NetHelper.GetMD5(username + "100dh888");
+            string key = context.Request["key"];
+            if (key != keyValue)
+                return json.WriteJson(0, "key值错误", new { });
+            //根据username调用tool接口获取userInfo
+            string strjson = NetHelper.HttpGet("http://tool.100dh.cn/UserHandler.ashx?action=GetUserByUsername&username="+username,"",Encoding.UTF8);//公共接口，调用user信息
+            JObject jo = (JObject)JsonConvert.DeserializeObject(strjson);
+            cmUserInfo userInfo = JsonConvert.DeserializeObject<cmUserInfo>(jo["detail"]["cmUser"].ToString());
             //时间间隔必须大于60秒
             DateTime dt = DateTime.Now;
             DateTime sdt = Convert.ToDateTime(userInfo.beforePubTime);
@@ -65,16 +70,11 @@ namespace xinxi
             //判断今日条数是否达到1000条
             if(userInfo.endTodayPubCount>999)
                 return json.WriteJson(0, "今日投稿已超过限制数！", new { });
-            //key值判断
-            string keyValue = NetHelper.GetMD5(username + "100dh888");
-            string key = context.Request["key"];
-            if (key != keyValue)
-                return json.WriteJson(0, "key值错误", new { });
             string url = "";
             try
             {
                 htmlPara hInfo = new htmlPara();
-                hInfo.userId = bll.GetUserId(username);//用户名
+                hInfo.userId = userInfo.Id.ToString();//用户名
                 hInfo.title = context.Request["title"];
                 string cid = context.Request["catid"];
                 if (string.IsNullOrEmpty(cid))
@@ -109,6 +109,8 @@ namespace xinxi
                 hInfo.com_web = userInfo.com_web;
                 //hInfo.realmNameId = "1";//发到哪个站
                 bll.AddHtml(hInfo);//存入数据库
+                //调用tool接口，更新userInfo已发条数等信息
+                NetHelper.HttpGet("http://tool.100dh.cn/UserHandler.ashx?action=UpUserPubInformation&userId=" + userInfo.Id, "", Encoding.UTF8);//公共接口，调用user信息
 
                 string keyword = "";//关键词
                 string description = "";//描述
