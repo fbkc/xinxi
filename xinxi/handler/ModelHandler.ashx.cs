@@ -70,6 +70,9 @@ namespace xinxi
             //判断今日条数是否达到1000条
             if(userInfo.endTodayPubCount>999)
                 return json.WriteJson(0, "今日投稿已超过限制数！", new { });
+            //判断所有条数是否发完
+            if (userInfo.canPubCount > userInfo.endPubCount)
+                return json.WriteJson(0, "信息条数已发完！", new { });
             string url = "";
             try
             {
