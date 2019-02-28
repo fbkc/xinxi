@@ -140,11 +140,12 @@ namespace xinxi
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        public List<htmlPara> GetProFloat(string userId)
+        public List<htmlPara> GetProFloat(string userId,string cId)
         {
             List<htmlPara> hList = new List<htmlPara>();
-            DataTable dt = SqlHelperCatalog.ExecuteDataTable(@"select top 10 * from htmlPara where userId=1 and columnId!=20 order by addTime desc",
-               new SqlParameter("@userId", userId));
+            DataTable dt = SqlHelperCatalog.ExecuteDataTable(@"select top 10 * from htmlPara where userId=@userId and columnId!=@columnId order by addTime desc",
+               new SqlParameter("@userId", userId),
+               new SqlParameter("@columnId",cId));
             if (dt.Rows.Count < 1)
                 return null;
             foreach (DataRow row in dt.Rows)
@@ -162,11 +163,12 @@ namespace xinxi
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        public List<htmlPara> GetNewsFloat(string userId)
+        public List<htmlPara> GetNewsFloat(string userId,string cId)
         {
             List<htmlPara> hList = new List<htmlPara>();
-            DataTable dt = SqlHelperCatalog.ExecuteDataTable(@"select top 10 * from htmlPara where userId=1 and columnId=20 order by addTime desc",
-               new SqlParameter("@userId", userId));
+            DataTable dt = SqlHelperCatalog.ExecuteDataTable(@"select top 10 * from htmlPara where userId=@userId and columnId=@columnId order by addTime desc",
+               new SqlParameter("@userId", userId),
+               new SqlParameter("@columnId",cId));
             if (dt.Rows.Count < 1)
                 return null;
             foreach (DataRow row in dt.Rows)

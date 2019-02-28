@@ -18,7 +18,7 @@ namespace xinxi
     public class ModelHandler : IHttpHandler
     {
         private BLL bll = new BLL();
-        private string hostUrl = "http://hyzx.100dh.cn/xinxi";
+        private string hostUrl = "http://hyzx.100dh.cn/hyzx";
         public void ProcessRequest(HttpContext context)
         {
             context.Response.ContentType = "text/plain";
@@ -133,8 +133,8 @@ namespace xinxi
                     columnName = bll.GetColumns(" where Id=" + cid)[0].columnName,
                     columnsList = bll.GetColumns(""),//导航
                     BPage = new { Href = pList[0].titleURL, Title = pList[0].title },//上一篇
-                    ProductFloat = bll.GetProFloat(hInfo.userId),
-                    NewsFloat = bll.GetNewsFloat(hInfo.userId)
+                    ProductFloat = bll.GetProFloat(hInfo.userId,"22"),
+                    NewsFloat = bll.GetNewsFloat(hInfo.userId,"22")
                 };
                 string html = SqlHelperCatalog.WriteTemplate(data, "DetailModel.html");
                 WriteFile(html, showName, username);//写模板

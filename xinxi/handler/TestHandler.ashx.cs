@@ -19,7 +19,7 @@ namespace xinxi
     public class TestHandler : IHttpHandler
     {
         private string hostName = "赢商云";
-        private string hostUrl = "http://hyzx.100dh.cn/xinxi";
+        private string hostUrl = "http://hyzx.100dh.cn/hyzx";
         public void ProcessRequest(HttpContext context)
         {
             context.Response.ContentType = "text/html";
@@ -101,8 +101,8 @@ namespace xinxi
                     keyword,
                     description = BLL.ReplaceHtmlTag(hInfo.articlecontent, 80),//产品简介
                     host = hostUrl,
-                    ProductFloat = bll.GetProFloat(hInfo.userId),
-                    NewsFloat = bll.GetNewsFloat(hInfo.userId)
+                    ProductFloat = bll.GetProFloat(hInfo.userId,"22"),
+                    NewsFloat = bll.GetNewsFloat(hInfo.userId,"22")
                 };
                 string html = SqlHelperCatalog.WriteTemplate(data, "DetailModel.html");
                 return html;
