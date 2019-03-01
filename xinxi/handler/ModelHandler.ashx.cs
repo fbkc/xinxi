@@ -65,7 +65,7 @@ namespace xinxi
             DateTime dt = DateTime.Now;
             DateTime sdt = Convert.ToDateTime(userInfo.beforePubTime);
             TimeSpan d3 = dt.Subtract(sdt);
-            if (d3.TotalSeconds < 60)
+            if (d3.TotalSeconds < 10)
                 return json.WriteJson(0, "信息发布过快，请隔60秒再提交！", new { });
             //判断今日条数是否达到1000条
             if(userInfo.endTodayPubCount>999)
@@ -91,7 +91,7 @@ namespace xinxi
                 //命名规则：ip/目录/用户名/show_行业id+(五位数id)
                 long htmlId = (bll.GetMaxId() + 1);
                 hInfo.Id = htmlId;
-                string showName = "show_" + cid + "_" + htmlId + ".html";
+                string showName = "ashow_" + cid + "_" + htmlId + ".html";
                 url = hostUrl + "/" + username + "/" + showName;
                 hInfo.titleURL = url;
                 //hInfo.titleURL = string.Format("handler/TestHandler.ashx?action=DetailPage&cId={0}&Id={1}", cid, htmlId);

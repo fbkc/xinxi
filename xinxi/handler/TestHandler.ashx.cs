@@ -42,7 +42,7 @@ namespace xinxi
                         //case "MoreNews": _strContent.Append(MoreNews(context)); break;//更多新闻
                         case "DetailPage": _strContent.Append(DetailPage(context)); break;//渲染动态详情页，伪静态可用
                         case "sitemap": _strContent.Append(SiteMapXML(context)); break;//站点地图XML
-                        case "map": _strContent.Append(SiteMapHtml(context)); break;//站点地图Html
+                        case "sitemap.html": _strContent.Append(SiteMapHtml(context)); break;//站点地图Html
                         default: break;
                     }
                 }
@@ -73,7 +73,16 @@ namespace xinxi
         /// <returns></returns>
         public string SiteMapHtml(HttpContext context)
         {
-            return MainPage(context);
+            List<htmlPara> hInfo = bll.GetXML();
+            var data = new
+            {
+                hInfo,
+                htmlTitle = hostName,
+                hostName,
+                hostUrl,
+                columnsList = bll.GetColumns(""),//导航
+            };
+            return SqlHelperCatalog.WriteTemplate(data, "sitemap.html");
         }
         /// <summary>
         /// 渲染详情页，伪静态

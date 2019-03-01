@@ -86,8 +86,13 @@
     <Content Include="Global.asax" />
     <Content Include="Newtonsoft.Json.dll" />
     <Content Include="NVelocity.dll" />
+    <Content Include="statics\css\basedev.css" />
+    <Content Include="statics\css\main.css" />
+    <Content Include="statics\css\reset.css" />
     <Content Include="statics\images\logo.jpg" />
+    <Content Include="statics\js\baidujs.js" />
     <Content Include="templates\map.html" />
+    <Content Include="templates\sitemap.html" />
     <Content Include="templates\sitemap.xml" />
     <Content Include="statics\css\images\bdsstyle.css" />
     <Content Include="statics\css\images\common.css" />

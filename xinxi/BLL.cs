@@ -25,6 +25,7 @@ namespace xinxi
             {
                 htmlPara hPara = new htmlPara();
                 hPara.Id = (long)SqlHelper.FromDBNull(row["Id"]);
+                hPara.title = (string)SqlHelper.FromDBNull(row["title"]);
                 hPara.titleURL = (string)SqlHelper.FromDBNull(row["titleURL"]);
                 hPara.addTime = ((DateTime)SqlHelper.FromDBNull(row["addTime"])).ToString("yyyy-MM-dd");
                 hParaList.Add(hPara);
