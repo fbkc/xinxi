@@ -18,7 +18,7 @@ namespace xinxi
     public class ModelHandler : IHttpHandler
     {
         private BLL bll = new BLL();
-        private string hostUrl = "http://hyzx.100dh.cn/hyzx";
+        private string hostUrl = "http://bid.10huan.com/hyzx";
         public void ProcessRequest(HttpContext context)
         {
             context.Response.ContentType = "text/plain";
@@ -71,7 +71,7 @@ namespace xinxi
             if(userInfo.endTodayPubCount>999)
                 return json.WriteJson(0, "今日投稿已超过限制数！", new { });
             //判断所有条数是否发完
-            if (userInfo.canPubCount > userInfo.endPubCount)
+            if (!(userInfo.canPubCount > userInfo.endPubCount))
                 return json.WriteJson(0, "信息条数已发完！", new { });
             string url = "";
             try

@@ -19,7 +19,7 @@ namespace xinxi
     public class TestHandler : IHttpHandler
     {
         private string hostName = "赢商云";
-        private string hostUrl = "http://hyzx.100dh.cn/hyzx";
+        private string hostUrl = "http://bid.10huan.com/hyzx";
         public void ProcessRequest(HttpContext context)
         {
             context.Response.ContentType = "text/html";
