@@ -18,7 +18,7 @@ namespace xinxi
         public List<htmlPara> GetXML()
         {
             List<htmlPara> hParaList = new List<htmlPara>();
-            DataTable dt = SqlHelperCatalog.ExecuteDataTable("select top 3000 * from htmlPara order by Id desc");
+            DataTable dt = SqlHelperCatalog.ExecuteDataTable("select top 3000 Id, title,titleURL,addTime from htmlPara order by Id desc");
             if (dt.Rows.Count < 1)
                 return null;
             foreach (DataRow row in dt.Rows)
@@ -34,44 +34,6 @@ namespace xinxi
         }
 
         /// <summary>
-        /// 查找单个用户
-        /// </summary>
-        /// <param name="sqlstr"></param>
-        /// <returns></returns>
-        public cmUserInfo GetUser(string sqlstr)
-        {
-            DataTable dt = SqlHelper.ExecuteDataSet("select * from userInfo " + sqlstr).Tables[0];
-            if (dt.Rows.Count < 1)
-                return null;
-            DataRow row = dt.Rows[0];
-            cmUserInfo userInfo = new cmUserInfo();
-            userInfo.Id = (int)row["Id"];
-            userInfo.username = (string)row["username"];
-            userInfo.password = (string)row["password"];
-            userInfo.userType = (int)row["userType"];
-            userInfo.isStop = (bool)row["isStop"];
-            userInfo.gradeId = (int)row["gradeId"];
-            userInfo.canPubCount = (int)row["canPubCount"];
-            userInfo.realmNameInfo = (string)row["realmNameInfo"];
-            userInfo.expirationTime = ((DateTime)row["expirationTime"]).ToString("yyyy-MM-dd HH:mm:ss");
-            userInfo.endPubCount = (int)row["endPubCount"];
-            userInfo.endTodayPubCount = (int)row["endTodayPubCount"];
-            userInfo.registerTime = ((DateTime)row["registerTime"]).ToString("yyyy-MM-dd HH:mm:ss");
-            userInfo.registerIP = (string)row["registerIP"];
-            userInfo.companyName = (string)row["companyName"];
-            userInfo.columnInfoId = (int)row["columnInfoId"];
-            userInfo.person = (string)row["person"];
-            userInfo.telephone = (string)row["telephone"];
-            userInfo.modile = (string)row["modile"];
-            userInfo.ten_qq = (string)row["ten_qq"];
-            userInfo.address = (string)row["address"];
-            userInfo.com_web = (string)row["com_web"];
-            userInfo.companyRemark = (string)row["companyRemark"];
-            userInfo.yewu = (string)row["yewu"];
-            userInfo.beforePubTime = (string)row["beforePubTime"];
-            return userInfo;
-        }
-        /// <summary>
         /// 获取单条信息
         /// </summary>
         /// <param name="Id"></param>
@@ -80,7 +42,7 @@ namespace xinxi
         public htmlPara GetHtmlPara(string columnId, string Id)
         {
             htmlPara hPara = new htmlPara();
-            DataTable dt = SqlHelperCatalog.ExecuteDataTable(@"select * from htmlPara h left join columnInfo c on h.columnId=c.Id  where columnId =@columnId and h.Id=@Id",
+            DataTable dt = SqlHelperCatalog.ExecuteDataTable(@"select * from htmlPara h left join columnInfo c on h.columnId=c.Id where columnId =@columnId and h.Id=@Id",
                new SqlParameter("@columnId", columnId),
                new SqlParameter("@Id", Id));
             if (dt.Rows.Count != 1)
@@ -122,16 +84,16 @@ namespace xinxi
             DataTable dt = SqlHelperCatalog.ExecuteDataTable(@"select top 1 -1 as [Sort],Id,title,columnId,titleURL from (select top 1 Id,title,columnId,titleURL from htmlPara where columnId=@columnId and Id<@Id order by Id desc) as tab_up 
                  union select top 1 1 as [Sort],Id,title,columnId,titleURL from (select top 1 Id,title,columnId,titleURL from htmlPara where columnId=@columnId and Id>@Id order by Id) as tab_up",
                new SqlParameter("@columnId", columnId),
-               new SqlParameter("@Id",Id));
+               new SqlParameter("@Id", Id));
             if (dt.Rows.Count < 1)
                 return null;
             foreach (DataRow row in dt.Rows)
             {
                 htmlPara hPara = new htmlPara();
-                hPara.Id = (long)row["Id"];
-                hPara.title = (string)row["title"];
-                hPara.titleURL = row["titleURL"].ToString();
-                hPara.columnId = (string)row["columnId"];
+                hPara.Id = (long)SqlHelper.FromDBNull(row["Id"]);
+                hPara.title = (string)SqlHelper.FromDBNull(row["title"]);
+                hPara.titleURL = (string)SqlHelper.FromDBNull(row["titleURL"]);
+                hPara.columnId = (string)SqlHelper.FromDBNull(row["columnId"]);
                 hList.Add(hPara);
             }
             return hList;
@@ -141,20 +103,20 @@ namespace xinxi
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        public List<htmlPara> GetProFloat(string userId,string cId)
+        public List<htmlPara> GetProFloat(string userId, string cId)
         {
             List<htmlPara> hList = new List<htmlPara>();
-            DataTable dt = SqlHelperCatalog.ExecuteDataTable(@"select top 10 * from htmlPara where userId=@userId and columnId!=@columnId order by addTime desc",
+            DataTable dt = SqlHelperCatalog.ExecuteDataTable(@"select top 10 Id,title,titleURL from htmlPara where userId=@userId and columnId!=@columnId order by addTime desc",
                new SqlParameter("@userId", userId),
-               new SqlParameter("@columnId",cId));
+               new SqlParameter("@columnId", cId));
             if (dt.Rows.Count < 1)
                 return null;
             foreach (DataRow row in dt.Rows)
             {
                 htmlPara hPara = new htmlPara();
-                hPara.Id = (long)row["Id"];
-                hPara.title = (string)row["title"];
-                hPara.titleURL = row["titleURL"].ToString();
+                hPara.Id = (long)SqlHelper.FromDBNull(row["Id"]);
+                hPara.title = (string)SqlHelper.FromDBNull(row["title"]);
+                hPara.titleURL = (string)SqlHelper.FromDBNull(row["titleURL"]);
                 hList.Add(hPara);
             }
             return hList;
@@ -164,20 +126,20 @@ namespace xinxi
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        public List<htmlPara> GetNewsFloat(string userId,string cId)
+        public List<htmlPara> GetNewsFloat(string userId, string cId)
         {
             List<htmlPara> hList = new List<htmlPara>();
-            DataTable dt = SqlHelperCatalog.ExecuteDataTable(@"select top 10 * from htmlPara where userId=@userId and columnId=@columnId order by addTime desc",
+            DataTable dt = SqlHelperCatalog.ExecuteDataTable(@"select top 10 Id,title,titleURL from htmlPara where userId=@userId and columnId=@columnId order by addTime desc",
                new SqlParameter("@userId", userId),
-               new SqlParameter("@columnId",cId));
+               new SqlParameter("@columnId", cId));
             if (dt.Rows.Count < 1)
                 return null;
             foreach (DataRow row in dt.Rows)
             {
                 htmlPara hPara = new htmlPara();
-                hPara.Id = (long)row["Id"];
-                hPara.title = (string)row["title"];
-                hPara.titleURL = row["titleURL"].ToString();
+                hPara.Id = (long)SqlHelper.FromDBNull(row["Id"]);
+                hPara.title = (string)SqlHelper.FromDBNull(row["title"]);
+                hPara.titleURL = (string)SqlHelper.FromDBNull(row["titleURL"]);
                 hList.Add(hPara);
             }
             return hList;
@@ -193,8 +155,8 @@ namespace xinxi
         {
             //分页查询
             List<htmlPara> hList = new List<htmlPara>();
-            DataTable dt = SqlHelperCatalog.ExecuteDataTable(@"select * from 
-                (select *, ROW_NUMBER() OVER(order by addTime desc) AS RowId from htmlPara where columnId=@columnId) as b where b.RowId between @startNum and @endNum",
+            DataTable dt = SqlHelperCatalog.ExecuteDataTable(@"select Id,title,titleURL,titleImg,userId,columnId,articlecontent,city,smallCount,companyName,ten_qq,com_web,addTime from 
+                (select Id,title,titleURL,titleImg,userId,columnId,articlecontent,city,smallCount,companyName,ten_qq,com_web,addTime, ROW_NUMBER() OVER(order by addTime desc) AS RowId from htmlPara where columnId=@columnId) as b where b.RowId between @startNum and @endNum",
                new SqlParameter("@columnId", columnId),
                new SqlParameter("@startNum", (pageIndex - 1) * pageSize + 1),
                new SqlParameter("@endNum", pageIndex * pageSize));
@@ -203,36 +165,34 @@ namespace xinxi
             foreach (DataRow row in dt.Rows)
             {
                 htmlPara hPara = new htmlPara();
-                hPara.Id = (long)row["Id"];
-                hPara.userId = row["userId"].ToString();
-                hPara.title = (string)row["title"];
-                hPara.titleImg = (string)row["titleImg"];
-                hPara.titleURL = (string)row["titleURL"];
-                hPara.columnId = (string)row["columnId"];//栏目Id
-                string content = (string)row["articlecontent"];
+                hPara.Id = (long)SqlHelper.FromDBNull(row["Id"]);
+                hPara.userId = SqlHelper.FromDBNull(row["userId"]).ToString();
+                hPara.title = (string)SqlHelper.FromDBNull(row["title"]);
+                hPara.titleImg = (string)SqlHelper.FromDBNull(row["titleImg"]);
+                hPara.titleURL = (string)SqlHelper.FromDBNull(row["titleURL"]);
+                hPara.columnId = (string)SqlHelper.FromDBNull(row["columnId"]);//栏目Id
+                string content = (string)SqlHelper.FromDBNull(row["articlecontent"]);
                 hPara.articlecontent = ReplaceHtmlTag(content, 60);//产品简介
-                hPara.city = (string)row["city"];//生产城市
-                hPara.smallCount = (string)row["smallCount"];//起订
+                hPara.city = (string)SqlHelper.FromDBNull(row["city"]);//生产城市
+                hPara.smallCount = (string)SqlHelper.FromDBNull(row["smallCount"]);//起订
                 hPara.companyName = (string)SqlHelper.FromDBNull(row["companyName"]);//公司名字
                 hPara.ten_qq = (string)SqlHelper.FromDBNull(row["ten_qq"]);
                 hPara.com_web = (string)SqlHelper.FromDBNull(row["com_web"]);//网址
-                hPara.addTime = ((DateTime)row["addTime"]).ToString("yyyy-MM-dd");
+                hPara.addTime = ((DateTime)SqlHelper.FromDBNull(row["addTime"])).ToString("yyyy-MM-dd");
                 hList.Add(hPara);
             }
             return hList;
         }
         /// <summary>
-        /// 
+        /// 获取前多少条数据
         /// </summary>
-        /// <param name="columnId"></param>
-        /// <param name="pageIndex"></param>
-        /// <param name="pageSize"></param>
+        /// <param name="count">条数</param>
+        /// <param name="columnId">栏目Id</param>
         /// <returns></returns>
         public List<htmlPara> GetHtmlList(string count, string columnId)
         {
-            //分页查询
             List<htmlPara> hList = new List<htmlPara>();
-            DataTable dt = SqlHelperCatalog.ExecuteDataTable(@"select top (CONVERT(int,@count)) * from htmlPara where columnId !='@columnId' order by addTime desc",
+            DataTable dt = SqlHelperCatalog.ExecuteDataTable(@"select top (CONVERT(int,@count)) Id,title,titleURL,addTime from htmlPara where columnId !='@columnId' order by addTime desc",
                new SqlParameter("@columnId", columnId),
                new SqlParameter("@count", count));
             if (dt.Rows.Count < 1)
@@ -240,20 +200,10 @@ namespace xinxi
             foreach (DataRow row in dt.Rows)
             {
                 htmlPara hPara = new htmlPara();
-                hPara.Id = (long)row["Id"];
-                hPara.userId = row["userId"].ToString();
-                hPara.title = (string)row["title"];
-                hPara.titleImg = (string)row["titleImg"];
-                hPara.titleURL = (string)row["titleURL"];
-                hPara.columnId = (string)row["columnId"];//栏目Id
-                string content = (string)row["articlecontent"];
-                hPara.articlecontent = ReplaceHtmlTag(content, 60);//产品简介
-                hPara.city = (string)row["city"];//生产城市
-                hPara.smallCount = (string)row["smallCount"];//起订
-                hPara.companyName = (string)SqlHelper.FromDBNull(row["companyName"]);//公司名字
-                hPara.ten_qq = (string)SqlHelper.FromDBNull(row["ten_qq"]);
-                hPara.com_web = (string)SqlHelper.FromDBNull(row["com_web"]);//网址
-                hPara.addTime = ((DateTime)row["addTime"]).ToString("yyyy-MM-dd");
+                hPara.Id = (long)SqlHelper.FromDBNull(row["Id"]);
+                hPara.title = (string)SqlHelper.FromDBNull(row["title"]);
+                hPara.titleURL = (string)SqlHelper.FromDBNull(row["titleURL"]);
+                hPara.addTime = ((DateTime)SqlHelper.FromDBNull(row["addTime"])).ToString("yyyy-MM-dd");
                 hList.Add(hPara);
             }
             return hList;
@@ -293,11 +243,11 @@ where RANK2<=10").Tables[0];
             foreach (DataRow row in dt.Rows)
             {
                 htmlInfo hInfo = new htmlInfo();
-                hInfo.title = (string)row["title"];
-                hInfo.titleImg = (string)row["titleImg"];
-                hInfo.titleURL = (string)row["titleURL"];
-                hInfo.columnId = (string)row["columnId"];//栏目Id
-                hInfo.addTime = row["addTime"].ToString();
+                hInfo.title = (string)SqlHelper.FromDBNull(row["title"]);
+                hInfo.titleImg = (string)SqlHelper.FromDBNull(row["titleImg"]);
+                hInfo.titleURL = (string)SqlHelper.FromDBNull(row["titleURL"]);
+                hInfo.columnId = (string)SqlHelper.FromDBNull(row["columnId"]);//栏目Id
+                hInfo.addTime = ((DateTime)SqlHelper.FromDBNull(row["addTime"])).ToString("yyyy-MM-dd");
                 //hInfo.realmNameId = (string)row["realmNameId"];//目录名
                 hList.Add(hInfo);
             }
@@ -406,8 +356,8 @@ where RANK2<=10").Tables[0];
             foreach (DataRow row in dt.Rows)
             {
                 columnInfo cInfo = new columnInfo();
-                cInfo.Id = (int)row["Id"];
-                cInfo.columnName = (string)row["columnName"];
+                cInfo.Id = (int)SqlHelper.FromDBNull(row["Id"]);
+                cInfo.columnName = (string)SqlHelper.FromDBNull(row["columnName"]);
                 cList.Add(cInfo);
             }
             return cList;

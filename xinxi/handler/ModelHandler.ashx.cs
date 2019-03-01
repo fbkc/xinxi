@@ -133,8 +133,8 @@ namespace xinxi
                     columnName = bll.GetColumns(" where Id=" + cid)[0].columnName,
                     columnsList = bll.GetColumns(""),//导航
                     BPage = new { Href = pList[0].titleURL, Title = pList[0].title },//上一篇
-                    ProductFloat = bll.GetProFloat(hInfo.userId,"22"),
-                    NewsFloat = bll.GetNewsFloat(hInfo.userId,"22")
+                    ProductFloat = bll.GetProFloat(hInfo.userId,"22"),//右侧浮动10条产品
+                    NewsFloat = bll.GetNewsFloat(hInfo.userId,"22")//右侧浮动10条新闻
                 };
                 string html = SqlHelperCatalog.WriteTemplate(data, "DetailModel.html");
                 WriteFile(html, showName, username);//写模板

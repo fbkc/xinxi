@@ -214,8 +214,8 @@ namespace xinxi
                 pageData,//页码渲染
                 pageCount,//总页数
                 productList = GetParaByCId(cId, pageIndex, 20),
-                newsList = GetParaByCId("20", 1, 20),
-                productListNocId = GetNoNewsByCId("20", "20")
+                newsList = GetParaByCId("20", 1, 20),//右侧浮动栏新闻20条
+                productListNocId = GetNoNewsByCId("20", "20")//右侧浮动栏产品20条
             };
             return SqlHelperCatalog.WriteTemplate(data, "Product.html");
         }
