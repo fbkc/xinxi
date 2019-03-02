@@ -18,7 +18,7 @@ namespace xinxi
     /// </summary>
     public class TestHandler : IHttpHandler
     {
-        private string hostName = "赢商云";
+        private string hostName = "一路发发";
         private string hostUrl = "http://www.16fafa.cn/hyfl";
         public void ProcessRequest(HttpContext context)
         {
@@ -37,9 +37,6 @@ namespace xinxi
                     {
                         case "MainPage": _strContent.Append(MainPage(context)); break;//主页
                         case "GetProduct": _strContent.Append(GetProduct(context)); break;//产品列表页
-                        //case "GetNews": _strContent.Append(GetNews(context)); break;//新闻列表
-                        //case "MoreProduct": _strContent.Append(MoreProduct(context)); break;//更多产品
-                        //case "MoreNews": _strContent.Append(MoreNews(context)); break;//更多新闻
                         case "DetailPage": _strContent.Append(DetailPage(context)); break;//渲染动态详情页，伪静态可用
                         case "sitemap": _strContent.Append(SiteMapXML(context)); break;//站点地图XML
                         case "sitemap.html": _strContent.Append(SiteMapHtml(context)); break;//站点地图Html
@@ -85,7 +82,7 @@ namespace xinxi
             return SqlHelperCatalog.WriteTemplate(data, "sitemap.html");
         }
         /// <summary>
-        /// 渲染详情页，伪静态
+        /// 渲染详情页，伪静态  /handler/TestHandler.ashx?action=DetailPage&cId=20&Id=1278
         /// </summary>
         /// <param name="context"></param>
         /// <returns></returns>
@@ -99,19 +96,35 @@ namespace xinxi
             {
                 htmlPara hInfo = bll.GetHtmlPara(columnId, Id);
                 string keyword = "";//关键词
+                string description = "";//描述
                 if (hInfo.title.Length > 6)
                     keyword = hInfo.title + "," + hInfo.title.Substring(0, 2) + "," + hInfo.title.Substring(2, 2) + "," + hInfo.title.Substring(4, 2);
                 else
                     keyword = hInfo.title;
+                description = BLL.ReplaceHtmlTag(hInfo.articlecontent, 80);//产品简介
+                List<string> BAPage = new List<string>();
+                List<htmlPara> pList = bll.GetHtmlBAPage(columnId, Id);//上一篇，下一篇
+                if (pList.Count == 1)
+                    BAPage.Add("上一篇：<a href = '"+pList[0].titleURL+"' >"+ pList[0].title+ "</a> <br />");//上一篇
+                if (pList.Count == 2)
+                {
+                    BAPage.Add("上一篇：<a href = '" + pList[0].titleURL + "' >" + pList[0].title + "</a> <br />" );
+                    BAPage.Add("下一篇：<a href = '" + pList[1].titleURL + "' >" + pList[1].title + "</a> <br />" );//下一篇
+                }
                 var data = new
                 {
                     htmlTitle = hInfo.title + "_" + hInfo.companyName,
                     hInfo,
                     keyword,
-                    description = BLL.ReplaceHtmlTag(hInfo.articlecontent, 80),//产品简介
-                    host = hostUrl,
-                    ProductFloat = bll.GetProFloat(hInfo.userId,"22"),
-                    NewsFloat = bll.GetNewsFloat(hInfo.userId,"22")
+                    description,
+                    hostUrl,
+                    hostName,
+                    columnName = bll.GetColumns(" where Id=" + columnId)[0].columnName,
+                    columnsList = bll.GetColumns(""),//导航
+                    pList,
+                    BAPage,
+                    ProductFloat = bll.GetProFloat(hInfo.userId,"22"),//右侧浮动10条产品
+                    NewsFloat = bll.GetNewsFloat(hInfo.userId,"22")//右侧浮动10条新闻
                 };
                 string html = SqlHelperCatalog.WriteTemplate(data, "DetailModel.html");
                 return html;
@@ -135,8 +148,8 @@ namespace xinxi
                 hostName,
                 hostUrl,
                 columnsList = bll.GetColumns(""),//导航
-                productTitle = GetNoNewsByCId("50", "20"),//最新产品，无分类
-                newsTitle = GetParaByCId("20", 1, 50)//最新新闻 
+                productTitle = GetNoNewsByCId("50", "22"),//最新产品，无分类
+                newsTitle = GetParaByCId("22", 1, 50)//最新新闻 
 
                 //lunboTitle = GetParaByCId("20", 1, 6),//轮播标题，推荐新闻
                 //tuijianTitle = GetNoNewsByCId("12", "20"),//推荐产品
@@ -214,111 +227,12 @@ namespace xinxi
                 pageData,//页码渲染
                 pageCount,//总页数
                 productList = GetParaByCId(cId, pageIndex, 20),
-                newsList = GetParaByCId("20", 1, 20),//右侧浮动栏新闻20条
-                productListNocId = GetNoNewsByCId("20", "20")//右侧浮动栏产品20条
+                newsList = GetParaByCId("22", 1, 20),//右侧浮动栏新闻20条
+                productListNocId = GetNoNewsByCId("20", "22")//右侧浮动栏产品20条
             };
             return SqlHelperCatalog.WriteTemplate(data, "Product.html");
         }
-        /// <summary>
-        /// 新闻列表页
-        /// </summary>
-        /// <param name="context"></param>
-        /// <param name="cId"></param>
-        /// <returns></returns>
-        public string GetNews(HttpContext context)
-        {
-            int pageIndex = 1;
-            if (context.Request["pageIndex"] != null)
-            {
-                try
-                {
-                    pageIndex = int.Parse(context.Request["pageIndex"]);
-                }
-                catch
-                {
-
-                }
-            }
-            string cId = context.Request["cId"];
-            int paraTotal = bll.GetPageTotal(cId);//此行业总条数
-            int pageCount = (int)Math.Ceiling(paraTotal / 20.0);//总页数（每页20条）
-            object[] pageData = new object[pageCount];
-            for (int i = 0; i < pageCount; i++)
-            {
-                pageData[i] = new { Href = "http://hyzx.100dh.cn/xinxi/list_" + cId + "/" + (i + 1) + ".html", Title = i + 1 };
-            }
-            var data = new
-            {
-                htmlTitle = "新闻栏目",
-                hostName,
-                hostUrl,
-                cId,
-                columnsList = bll.GetColumns(""),//导航
-                columnName = bll.GetColumns("where Id=" + cId)[0].columnName,
-                paraTotal,//总条数
-                pageIndex,//当前页
-                pageData,//页码渲染
-                pageCount,//总页数
-                newsList = GetParaByCId("20", pageIndex, 20),
-                productList = GetNoNewsByCId("20", "20")
-            };
-            return SqlHelperCatalog.WriteTemplate(data, "News.html");
-        }
-        /// <summary>
-        /// 更多产品页
-        /// </summary>
-        /// <param name="context"></param>
-        /// <returns></returns>
-        public string MoreProduct(HttpContext context)
-        {
-            string cId = "21";
-            var data = new
-            {
-                htmlTitle = "产品栏目",
-                hostName,
-                hostUrl,
-                cId,
-                c1Title = GetParaByCId("1", 1, 10),
-                c2Title = GetParaByCId("2", 1, 10),
-                c3Title = GetParaByCId("3", 1, 10),
-                c4Title = GetParaByCId("4", 1, 10),//工具量具，不显示
-                c5Title = GetParaByCId("5", 1, 10),
-                c6Title = GetParaByCId("6", 1, 10),
-                c7Title = GetParaByCId("7", 1, 10),
-                c8Title = GetParaByCId("8", 1, 10),
-                c9Title = GetParaByCId("9", 1, 10),
-                c10Title = GetParaByCId("10", 1, 10),
-                c11Title = GetParaByCId("11", 1, 10),
-                c12Title = GetParaByCId("12", 1, 10),
-                c13Title = GetParaByCId("13", 1, 10),
-                c14Title = GetParaByCId("14", 1, 10),
-                c15Title = GetParaByCId("15", 1, 10),
-                c16Title = GetParaByCId("16", 1, 10),
-                c17Title = GetParaByCId("17", 1, 10),
-                c18Title = GetParaByCId("18", 1, 10),
-                c19Title = GetParaByCId("19", 1, 10)
-            };
-            return SqlHelperCatalog.WriteTemplate(data, "MoreProduct.html");
-        }
-        /// <summary>
-        /// 更多新闻页
-        /// </summary>
-        /// <param name="context"></param>
-        /// <returns></returns>
-        public string MoreNews(HttpContext context)
-        {
-            string cId = "22";
-            var data = new
-            {
-                htmlTitle = "新闻栏目",
-                hostName,
-                hostUrl,
-                cId,
-                newsTitle = GetParaByCId("20", 1, 30)
-            };
-            return SqlHelperCatalog.WriteTemplate(data, "MoreNews.html");
-        }
-
+        
         private BLL bll = new BLL();
         /// <summary>
         /// 根据行业id获取最新产品

@@ -15,7 +15,7 @@
 </head>
 <body>
     <div class="head">
-        <div class="logo"><a href="#"><img src="$data.hostUrl/statics/images/logo.jpg" title="" alt="" width="230" height="60" /></a></div>
+        <div class="logo"><a href="#"><img src="$data.hostUrl/statics/images/logo.png" title="" alt="" width="230" height="60" /></a></div>
         <div class="search">
             <!--<form action="#" name="formsearch">-->
             <input type="hidden" name="kwtype" value="0" />
@@ -41,7 +41,9 @@
                 <div class="ban_708"></div>
                 <div class="con">$data.hInfo.articlecontent</div>
                 <div class="ban_708"></div>
-                <div class="b_box6">上一篇：<a href='$data.BPage.Href'>$data.BPage.Title</a> <br /></div>
+                #foreach($p in $data.BAPage)
+                <div class='b_box6'>$p</div>
+                #end
             </div>
         </div>
         <div class="right_1">

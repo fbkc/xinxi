@@ -90,8 +90,8 @@
     <Content Include="statics\css\main.css" />
     <Content Include="statics\css\reset.css" />
     <Content Include="statics\images\logo.jpg" />
+    <Content Include="statics\images\logo.png" />
     <Content Include="statics\js\baidujs.js" />
-    <Content Include="templates\map.html" />
     <Content Include="templates\sitemap.html" />
     <Content Include="templates\sitemap.xml" />
     <Content Include="statics\css\images\bdsstyle.css" />
@@ -118,13 +118,10 @@
     <Content Include="statics\public\jquery.min.js" />
     <Content Include="templates\404.html" />
     <Content Include="templates\BAPage.html" />
-    <Content Include="DetailPage.html" />
     <Content Include="templates\foot.html" />
     <Content Include="templates\head.html" />
-    <Content Include="templates\banchengpin.html" />
     <Content Include="templates\DetailModel.html" />
     <Content Include="templates\MainPage.html" />
-    <Content Include="templates\MoreProduct.html" />
     <Content Include="templates\navigation.html" />
     <Content Include="templates\Product.html" />
     <Content Include="UrlRewriter.dll" />

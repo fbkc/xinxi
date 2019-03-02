@@ -45,7 +45,7 @@ namespace xinxi
             DataTable dt = SqlHelperCatalog.ExecuteDataTable(@"select * from htmlPara h left join columnInfo c on h.columnId=c.Id where columnId =@columnId and h.Id=@Id",
                new SqlParameter("@columnId", columnId),
                new SqlParameter("@Id", Id));
-            if (dt.Rows.Count != 1)
+            if (dt.Rows.Count <1)
                 return null;
             DataRow row = dt.Rows[0];
             hPara.Id = (long)SqlHelper.FromDBNull(row["Id"]);
