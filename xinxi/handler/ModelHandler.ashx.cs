@@ -18,7 +18,7 @@ namespace xinxi
     public class ModelHandler : IHttpHandler
     {
         private BLL bll = new BLL();
-        private string hostUrl = "http://bid.10huan.com/hyzx";
+        private string hostUrl = "http://www.16fafa.cn/hyfl";
         public void ProcessRequest(HttpContext context)
         {
             context.Response.ContentType = "text/plain";
