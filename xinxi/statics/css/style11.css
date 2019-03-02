@@ -81,22 +81,24 @@ body {
         }
 
 .head {
-    width: 60%;
     height: 60px;
     padding: 20px 0;
     margin: 0 auto;
+    position: relative;
 }
 
 .logo {
-    float: left;
+    margin-left:290px;
     width: 270px;
+    display:inline-block;
 }
 
 .search {
-    float: left;
     height: 38px;
-    width: 454px;
-    padding: 11px 100px;
+    padding: 11px 11px 11px 198px;
+    position: absolute;
+    min-width:500px;
+    display:inline-block;
 }
 
 .search-keyword {
