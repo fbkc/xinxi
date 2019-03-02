@@ -88,14 +88,14 @@ body {
 }
 
 .logo {
-    margin-left:290px;
+    margin-left:300px;
     width: 270px;
     display:inline-block;
 }
 
 .search {
     height: 38px;
-    padding: 11px 11px 11px 198px;
+    padding: 11px 11px 11px 188px;
     position: absolute;
     min-width:500px;
     display:inline-block;
