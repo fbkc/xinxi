@@ -150,9 +150,6 @@ namespace xinxi
                 columnsList = bll.GetColumns(""),//导航
                 productTitle = GetNoNewsByCId("50", "22"),//最新产品，无分类
                 newsTitle = GetParaByCId("22", 1, 50)//最新新闻 
-
-                //lunboTitle = GetParaByCId("20", 1, 6),//轮播标题，推荐新闻
-                //tuijianTitle = GetNoNewsByCId("12", "20"),//推荐产品
             };
             return SqlHelperCatalog.WriteTemplate(data, "MainPage.html");
         }
