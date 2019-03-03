@@ -1,0 +1,88 @@
+﻿<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta name="applicable-device" content="pc,mobile" />
+    <meta name="MobileOptimized" content="width" />
+    <meta name="HandheldFriendly" content="true" />
+    <title>公司首页-{$data.htmlTitle}</title>
+    <link rel="stylesheet" href="$data.hostUrl/statics/company/css/uikit.docs.min.css" />
+    <link rel="stylesheet" href="$data.hostUrl/statics/company/css/style.css" />
+    <script type="text/javascript" src="$data.hostUrl/statics/company/js/jquery.min.js"></script>
+    <script src="$data.hostUrl/statics/company/js/uikit.min.js"></script>
+    <script src="$data.hostUrl/statics/company/js/slideshow.js"></script>
+    <script src="$data.hostUrl/statics/company/js/slideshow-fx.js"></script>
+    <script src="$data.hostUrl/statics/company/js/slideset.js"></script>
+</head>
+
+<body>
+    <script language=javascript src='http://www.99114.com/hyfl/product/header/author/get/6301.html'></script>
+    <div class="production">
+        <div class="title">产品展示 <b>/ PRODUCTION</b></div>
+        <div class="container mt15">
+            <div class="uk-margin" data-uk-slideset="{small: 2, medium: 4,autoplay:true,duration:200}">
+                <div class="uk-slidenav-position uk-margin">
+                    <ul class="uk-slideset uk-grid uk-flex-center">
+                        #foreach($p in $data.ProductList)
+                        <li><a href="$p.titleURL"><img src="$p.titleImg" alt="$p.title" onerror="this.src='$data.hostUrl/statics/images/nopic.gif'" /></a><p>$p.titl</p></li>
+                        #end
+                    </ul>
+                    <a href="#" class="uk-slidenav uk-slidenav-previous" data-uk-slideset-item="previous"></a>
+                    <a href="#" class="uk-slidenav uk-slidenav-next" data-uk-slideset-item="next"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="news">
+        <div class="title">新闻资讯 <b>/ NEWS</b></div>
+        <div class="container">
+            <ul class="clear_pull mt15">
+                #foreach($p in $data.NewsList)
+                <li><a href="$p.titleURL">$p.title</a><span class="time">$p.addTime</span></li>
+                #end
+            </ul>
+        </div>
+    </div>
+    <script language=javascript src='http://www.99114.com/hyfl/product/footer/author/get/6301.html'></script>
+    <script src="$data.hostUrl/statics/company/js/public.js"></script>
+    <script>
+        ShowMap('http://tu.ossfiles.cn:9186/group1/M00/11/BF/rBgIBlxw9FypY-0cAAAozBw4tq8436.jpg', '118.825919,31.956292', '江苏大容建筑装饰有限公司',
+            '戴小姐', '江宁区双龙大道1118号新都汇广场2幢105室',
+            '13661473343',
+            '13661473343',
+            '297326966', '16');
+        //地图
+        function ShowMap(site_img, zuobiao, company, person, address, phone, mobile, qq, zoom) {
+            var arrzuobiao = zuobiao.split(',');
+            var map = new BMap.Map("map");
+            map.centerAndZoom(new BMap.Point(arrzuobiao[0], arrzuobiao[1]), zoom);
+            map.addControl(new BMap.NavigationControl());
+            var marker = new BMap.Marker(new BMap.Point(arrzuobiao[0], arrzuobiao[1]));
+            map.addOverlay(marker);
+            var str = '<div style="margin-top:10px" class="clearfix">' +
+                '<img src="' + site_img + '" class="map_img" alt="卫星定位地址">' +
+                '<div class="map_contact">' +
+                '<p class="text_main">' + company + '</p>' +
+                '<p>联系人：' + person + '</p>' +
+                '<p>手机：' + mobile + '</p>' +
+                '<p>电话：' + phone + '</p>' +
+                '<p>QQ：' + qq + '</p>' +
+                '<p>地址：' + address + '</p>' +
+                '</div>' +
+                '</div>';
+            var infoWindow = new BMap.InfoWindow(str);
+            infoWindow.setWidth(420)
+            infoWindow.setHeight(200)
+            marker.addEventListener("click", function () {
+                this.openInfoWindow(infoWindow);
+            });
+            marker.openInfoWindow(infoWindow);
+        }
+    </script>
+</body>
+
+</html>

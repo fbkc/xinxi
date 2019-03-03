@@ -74,6 +74,7 @@
     <Content Include="handler\MainHandler.ashx" />
     <Content Include="handler\ModelHandler.ashx" />
     <Content Include="handler\TestHandler.ashx" />
+    <Content Include="handler\company\FooterHandler.ashx" />
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -86,12 +87,22 @@
     <Content Include="Global.asax" />
     <Content Include="Newtonsoft.Json.dll" />
     <Content Include="NVelocity.dll" />
+    <Content Include="statics\company\css\uikit.docs.min.css" />
+    <Content Include="statics\company\css\style.css" />
+    <Content Include="statics\company\js\public.js" />
+    <Content Include="statics\company\js\slideset.js" />
+    <Content Include="statics\company\js\slideshow.js" />
+    <Content Include="statics\company\js\jquery.min.js" />
+    <Content Include="statics\company\js\slideshow-fx.js" />
+    <Content Include="statics\company\js\uikit.min.js" />
     <Content Include="statics\css\basedev.css" />
     <Content Include="statics\css\main.css" />
     <Content Include="statics\css\reset.css" />
     <Content Include="statics\images\logo.jpg" />
     <Content Include="statics\images\logo.png" />
     <Content Include="statics\js\baidujs.js" />
+    <Content Include="templates\company\footer.html" />
+    <Content Include="templates\company\main.html" />
     <Content Include="templates\sitemap.html" />
     <Content Include="templates\sitemap.xml" />
     <Content Include="statics\css\images\bdsstyle.css" />
@@ -137,6 +148,9 @@
     <Compile Include="handler\BAHandler.ashx.cs">
       <DependentUpon>BAHandler.ashx</DependentUpon>
     </Compile>
+    <Compile Include="handler\company\FooterHandler.ashx.cs">
+      <DependentUpon>FooterHandler.ashx</DependentUpon>
+    </Compile>
     <Compile Include="handler\MainHandler.ashx.cs">
       <DependentUpon>MainHandler.ashx</DependentUpon>
     </Compile>
@@ -156,7 +170,9 @@
     <Compile Include="Tools.cs" />
     <Compile Include="XmlHelper.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="statics\company\images\" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

@@ -362,5 +362,29 @@ where RANK2<=10").Tables[0];
             }
             return cList;
         }
+        /// <summary>
+        /// 随机十条公司产品
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public List<htmlPara> GetCompanyPro(string userId)
+        {
+            List<htmlPara> hList = new List<htmlPara>();
+            DataTable dt = SqlHelperCatalog.ExecuteDataTable(@"SELECT TOP 10 Id,title,titleURL,titleImg,addTime FROM htmlPara where userId=@userId and DateDiff(dd,addTime,getdate())<=7 order by  newid()",
+               new SqlParameter("@userId", userId));
+            if (dt.Rows.Count < 1)
+                return null;
+            foreach (DataRow row in dt.Rows)
+            {
+                htmlPara hPara = new htmlPara();
+                hPara.Id = (long)SqlHelper.FromDBNull(row["Id"]);
+                hPara.title = (string)SqlHelper.FromDBNull(row["title"]);
+                hPara.titleURL = (string)SqlHelper.FromDBNull(row["titleURL"]);
+                hPara.titleImg = (string)SqlHelper.FromDBNull(row["titleImg"]);
+                hPara.addTime = (string)SqlHelper.FromDBNull(row["addTime"]);
+                hList.Add(hPara);
+            }
+            return hList;
+        }
     }
 }

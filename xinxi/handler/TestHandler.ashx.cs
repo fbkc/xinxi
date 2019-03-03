@@ -40,12 +40,14 @@ namespace xinxi
                         case "DetailPage": _strContent.Append(DetailPage(context)); break;//渲染动态详情页，伪静态可用
                         case "sitemap": _strContent.Append(SiteMapXML(context)); break;//站点地图XML
                         case "sitemap.html": _strContent.Append(SiteMapHtml(context)); break;//站点地图Html
+                        case "companymain": _strContent.Append(CompanyMain(context)); break;//站点地图Html
                         default: break;
                     }
                 }
             }
             context.Response.Write(_strContent.ToString());
         }
+        private BLL bll = new BLL();
 
         #region 主页
         /// <summary>
@@ -61,8 +63,8 @@ namespace xinxi
                 hostName,
                 hostUrl,
                 columnsList = bll.GetColumns(""),//导航
-                productTitle = GetNoNewsByCId("50", "22"),//最新产品，无分类
-                newsTitle = GetParaByCId("22", 1, 50)//最新新闻 
+                productTitle = bll.GetHtmlList("50", "22"),//最新产品，无分类
+                newsTitle = bll.GetHtmlList("22", 1, 50)//最新新闻 
             };
             return SqlHelperCatalog.WriteTemplate(data, "MainPage.html");
         }
@@ -139,9 +141,9 @@ namespace xinxi
                 pageIndex,//当前页
                 pageData,//页码渲染
                 pageCount,//总页数
-                productList = GetParaByCId(cId, pageIndex, 20),
-                newsList = GetParaByCId("22", 1, 20),//右侧浮动栏新闻20条
-                productListNocId = GetNoNewsByCId("20", "22")//右侧浮动栏产品20条
+                productList = bll.GetHtmlList(cId, pageIndex, 20),
+                newsList = bll.GetHtmlList("22", 1, 20),//右侧浮动栏新闻20条
+                productListNocId = bll.GetHtmlList("20", "22")//右侧浮动栏产品20条
             };
             return SqlHelperCatalog.WriteTemplate(data, "Product.html");
         }
@@ -169,6 +171,7 @@ namespace xinxi
                 else
                     keyword = hInfo.title;
                 description = BLL.ReplaceHtmlTag(hInfo.articlecontent, 80);//产品简介
+                #region 上一篇，下一篇
                 List<string> BAPage = new List<string>();
                 List<htmlPara> pList = bll.GetHtmlBAPage(columnId, Id);//上一篇，下一篇
                 if (pList.Count == 1)
@@ -178,6 +181,7 @@ namespace xinxi
                     BAPage.Add("上一篇：<a href = '" + pList[0].titleURL + "' >" + pList[0].title + "</a> <br />");
                     BAPage.Add("下一篇：<a href = '" + pList[1].titleURL + "' >" + pList[1].title + "</a> <br />");//下一篇
                 }
+                #endregion
                 var data = new
                 {
                     htmlTitle = hInfo.title + "_" + hInfo.companyName,
@@ -242,30 +246,54 @@ namespace xinxi
         }
         #endregion
 
-        private BLL bll = new BLL();
+        #region
         /// <summary>
-        /// 根据行业id获取最新产品
+        /// 公司主页
         /// </summary>
-        /// <param name="columnId">行业Id</param>
-        /// <param name="pageIndex">页码</param>
-        /// <param name="pageSize">每页条数</param>
+        /// <param name="context"></param>
         /// <returns></returns>
-        public List<htmlPara> GetParaByCId(string columnId, int pageIndex, int pageSize)
+        public string CompanyMain(HttpContext context)
         {
-            List<htmlPara> hList = bll.GetHtmlList(columnId, pageIndex, pageSize);
-            return hList;
+            string columnId = context.Request["cId"];
+            string Id = context.Request["Id"];
+            string userId = context.Request["userId"];
+            if (string.IsNullOrEmpty(columnId) || string.IsNullOrEmpty(Id))
+                return SqlHelperCatalog.WriteTemplate("", "404.html");
+            try
+            {
+                htmlPara hInfo = bll.GetHtmlPara(columnId, Id);
+                string keyword = "";//关键词
+                string description = "";//描述
+                if (hInfo.title.Length > 6)
+                    keyword = hInfo.title + "," + hInfo.title.Substring(0, 2) + "," + hInfo.title.Substring(2, 2) + "," + hInfo.title.Substring(4, 2);
+                else
+                    keyword = hInfo.title;
+                description = BLL.ReplaceHtmlTag(hInfo.articlecontent, 80);//产品简介
+                List<htmlPara> ProductList = bll.GetCompanyPro(userId);//随机十条公司产品
+                List<htmlPara> NewsList = bll.GetCompanyPro(userId);//随机十条公司新闻
+                var data = new
+                {
+                    htmlTitle =hInfo.companyName,
+                    hInfo,
+                    keyword,
+                    description,
+                    hostUrl,
+                    hostName,
+                    ProductList,
+                    NewsList,
+                    ProductFloat = bll.GetProFloat(hInfo.userId, "22"),//右侧浮动10条产品
+                    NewsFloat = bll.GetNewsFloat(hInfo.userId, "22")//右侧浮动10条新闻
+                };
+                string html = SqlHelperCatalog.WriteTemplate(data, "DetailModel.html");
+                return html;
+            }
+            catch (Exception ex)
+            {
+                return json.WriteJson(0, ex.ToString(), new { });
+            }
         }
-        /// <summary>
-        /// 获取最新产品，无分类
-        /// </summary>
-        /// <param name="count">产品条数</param>
-        /// <param name="columnId">行业id</param>
-        /// <returns></returns>
-        public List<htmlPara> GetNoNewsByCId(string count, string columnId)
-        {
-            List<htmlPara> hList = bll.GetHtmlList(count, columnId);
-            return hList;
-        }
+        #endregion
+
         public bool IsReusable
         {
             get
