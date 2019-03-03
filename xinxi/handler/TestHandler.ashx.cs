@@ -47,93 +47,7 @@ namespace xinxi
             context.Response.Write(_strContent.ToString());
         }
 
-        /// <summary>
-        /// siteMap XML
-        /// </summary>
-        /// <param name="context"></param>
-        /// <returns></returns>
-        public string SiteMapXML(HttpContext context)
-        {
-            context.Response.ContentType = "application/xml;charset=utf-8";
-            List<htmlPara> hInfo = bll.GetXML();
-            var data = new
-            {
-                hInfo
-            };
-            string html = SqlHelperCatalog.WriteTemplate(data, "sitemap.xml");
-            return html;
-        }
-        /// <summary>
-        /// siteMap Html
-        /// </summary>
-        /// <param name="context"></param>
-        /// <returns></returns>
-        public string SiteMapHtml(HttpContext context)
-        {
-            List<htmlPara> hInfo = bll.GetXML();
-            var data = new
-            {
-                hInfo,
-                htmlTitle = hostName,
-                hostName,
-                hostUrl,
-                columnsList = bll.GetColumns(""),//导航
-            };
-            return SqlHelperCatalog.WriteTemplate(data, "sitemap.html");
-        }
-        /// <summary>
-        /// 渲染详情页，伪静态  /handler/TestHandler.ashx?action=DetailPage&cId=20&Id=1278
-        /// </summary>
-        /// <param name="context"></param>
-        /// <returns></returns>
-        public string DetailPage(HttpContext context)
-        {
-            string columnId = context.Request["cId"];
-            string Id = context.Request["Id"];
-            if (string.IsNullOrEmpty(columnId) || string.IsNullOrEmpty(Id))
-                return SqlHelperCatalog.WriteTemplate("", "404.html");
-            try
-            {
-                htmlPara hInfo = bll.GetHtmlPara(columnId, Id);
-                string keyword = "";//关键词
-                string description = "";//描述
-                if (hInfo.title.Length > 6)
-                    keyword = hInfo.title + "," + hInfo.title.Substring(0, 2) + "," + hInfo.title.Substring(2, 2) + "," + hInfo.title.Substring(4, 2);
-                else
-                    keyword = hInfo.title;
-                description = BLL.ReplaceHtmlTag(hInfo.articlecontent, 80);//产品简介
-                List<string> BAPage = new List<string>();
-                List<htmlPara> pList = bll.GetHtmlBAPage(columnId, Id);//上一篇，下一篇
-                if (pList.Count == 1)
-                    BAPage.Add("上一篇：<a href = '"+pList[0].titleURL+"' >"+ pList[0].title+ "</a> <br />");//上一篇
-                if (pList.Count == 2)
-                {
-                    BAPage.Add("上一篇：<a href = '" + pList[0].titleURL + "' >" + pList[0].title + "</a> <br />" );
-                    BAPage.Add("下一篇：<a href = '" + pList[1].titleURL + "' >" + pList[1].title + "</a> <br />" );//下一篇
-                }
-                var data = new
-                {
-                    htmlTitle = hInfo.title + "_" + hInfo.companyName,
-                    hInfo,
-                    keyword,
-                    description,
-                    hostUrl,
-                    hostName,
-                    columnName = bll.GetColumns(" where Id=" + columnId)[0].columnName,
-                    columnsList = bll.GetColumns(""),//导航
-                    BAPage,
-                    ProductFloat = bll.GetProFloat(hInfo.userId,"22"),//右侧浮动10条产品
-                    NewsFloat = bll.GetNewsFloat(hInfo.userId,"22")//右侧浮动10条新闻
-                };
-                string html = SqlHelperCatalog.WriteTemplate(data, "DetailModel.html");
-                return html;
-            }
-            catch (Exception ex)
-            {
-                return json.WriteJson(0, ex.ToString(), new { });
-            }
-        }
-
+        #region 主页
         /// <summary>
         /// 主页
         /// </summary>
@@ -152,6 +66,9 @@ namespace xinxi
             };
             return SqlHelperCatalog.WriteTemplate(data, "MainPage.html");
         }
+        #endregion
+
+        #region 栏目列表页
         /// <summary>
         /// 产品列表页
         /// </summary>
@@ -228,7 +145,103 @@ namespace xinxi
             };
             return SqlHelperCatalog.WriteTemplate(data, "Product.html");
         }
-        
+        #endregion
+
+        #region 渲染详情页，伪静态
+        /// <summary>
+        /// 渲染详情页，伪静态  /handler/TestHandler.ashx?action=DetailPage&cId=20&Id=1278
+        /// </summary>
+        /// <param name="context"></param>
+        /// <returns></returns>
+        public string DetailPage(HttpContext context)
+        {
+            string columnId = context.Request["cId"];
+            string Id = context.Request["Id"];
+            if (string.IsNullOrEmpty(columnId) || string.IsNullOrEmpty(Id))
+                return SqlHelperCatalog.WriteTemplate("", "404.html");
+            try
+            {
+                htmlPara hInfo = bll.GetHtmlPara(columnId, Id);
+                string keyword = "";//关键词
+                string description = "";//描述
+                if (hInfo.title.Length > 6)
+                    keyword = hInfo.title + "," + hInfo.title.Substring(0, 2) + "," + hInfo.title.Substring(2, 2) + "," + hInfo.title.Substring(4, 2);
+                else
+                    keyword = hInfo.title;
+                description = BLL.ReplaceHtmlTag(hInfo.articlecontent, 80);//产品简介
+                List<string> BAPage = new List<string>();
+                List<htmlPara> pList = bll.GetHtmlBAPage(columnId, Id);//上一篇，下一篇
+                if (pList.Count == 1)
+                    BAPage.Add("上一篇：<a href = '" + pList[0].titleURL + "' >" + pList[0].title + "</a> <br />");//上一篇
+                if (pList.Count == 2)
+                {
+                    BAPage.Add("上一篇：<a href = '" + pList[0].titleURL + "' >" + pList[0].title + "</a> <br />");
+                    BAPage.Add("下一篇：<a href = '" + pList[1].titleURL + "' >" + pList[1].title + "</a> <br />");//下一篇
+                }
+                var data = new
+                {
+                    htmlTitle = hInfo.title + "_" + hInfo.companyName,
+                    hInfo,
+                    keyword,
+                    description,
+                    hostUrl,
+                    hostName,
+                    columnName = bll.GetColumns(" where Id=" + columnId)[0].columnName,
+                    columnsList = bll.GetColumns(""),//导航
+                    BAPage,
+                    ProductFloat = bll.GetProFloat(hInfo.userId, "22"),//右侧浮动10条产品
+                    NewsFloat = bll.GetNewsFloat(hInfo.userId, "22")//右侧浮动10条新闻
+                };
+                string html = SqlHelperCatalog.WriteTemplate(data, "DetailModel.html");
+                return html;
+            }
+            catch (Exception ex)
+            {
+                return json.WriteJson(0, ex.ToString(), new { });
+            }
+        }
+        #endregion
+
+        #region XML
+        /// <summary>
+        /// siteMap XML
+        /// </summary>
+        /// <param name="context"></param>
+        /// <returns></returns>
+        public string SiteMapXML(HttpContext context)
+        {
+            context.Response.ContentType = "application/xml;charset=utf-8";
+            List<htmlPara> hInfo = bll.GetXML();
+            var data = new
+            {
+                hInfo
+            };
+            string html = SqlHelperCatalog.WriteTemplate(data, "sitemap.xml");
+            return html;
+        }
+        #endregion
+
+        #region Html
+        /// <summary>
+        /// siteMap Html
+        /// </summary>
+        /// <param name="context"></param>
+        /// <returns></returns>
+        public string SiteMapHtml(HttpContext context)
+        {
+            List<htmlPara> hInfo = bll.GetXML();
+            var data = new
+            {
+                hInfo,
+                htmlTitle = hostName,
+                hostName,
+                hostUrl,
+                columnsList = bll.GetColumns(""),//导航
+            };
+            return SqlHelperCatalog.WriteTemplate(data, "sitemap.html");
+        }
+        #endregion
+
         private BLL bll = new BLL();
         /// <summary>
         /// 根据行业id获取最新产品
