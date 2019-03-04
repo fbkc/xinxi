@@ -57,7 +57,7 @@ namespace xinxi
             string key = context.Request["key"];
             if (key != keyValue)
                 return json.WriteJson(0, "key值错误", new { });
-            //根据username调用tool接口获取userInfo
+            //根据username调用tool接口获取userInfo，做一个编码解码加密
             string strjson = NetHelper.HttpGet("http://tool.100dh.cn/UserHandler.ashx?action=GetUserByUsername&username="+username,"",Encoding.UTF8);//公共接口，调用user信息
             JObject jo = (JObject)JsonConvert.DeserializeObject(strjson);
             cmUserInfo userInfo = JsonConvert.DeserializeObject<cmUserInfo>(jo["detail"]["cmUser"].ToString());
@@ -108,6 +108,7 @@ namespace xinxi
                 hInfo.username = username;
                 //公司 / 会员信息
                 //cmUserInfo uInfo = bll.GetUser(string.Format("where username='{0}'", username));
+                hInfo.ten_qq = userInfo.ten_qq;
                 hInfo.companyName = userInfo.companyName;
                 hInfo.com_web = userInfo.com_web;
                 //hInfo.realmNameId = "1";//发到哪个站
