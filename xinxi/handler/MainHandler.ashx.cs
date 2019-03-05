@@ -40,6 +40,7 @@ namespace xinxi
             }
             context.Response.Write(_strContent.ToString());
         }
+        #region 主动push百度
         /// <summary>
         /// 主动push百度
         /// </summary>
@@ -99,6 +100,7 @@ namespace xinxi
                 return ex.Message;
             }
         }
+        #endregion
 
         /// <summary>
         /// 目录首页显示信息
@@ -122,7 +124,7 @@ namespace xinxi
             }
             return json.WriteJson(1, "成功", new { htmlList = hList });
         }
-        
+
         /// <summary>
         /// 每个栏目拿到的信息
         /// </summary>
