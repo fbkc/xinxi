@@ -32,6 +32,23 @@ namespace xinxi
             }
             return hParaList;
         }
+        /// <summary>
+        /// 主动post百度
+        /// </summary>
+        /// <returns></returns>
+        public List<string> GetUrl(int count)
+        {
+            List<string> slist = new List<string>();
+            DataTable dt = SqlHelperCatalog.ExecuteDataTable("select top "+count+" titleURL from htmlPara order by Id desc");
+            if (dt.Rows.Count < 1)
+                return null;
+            foreach (DataRow row in dt.Rows)
+            {
+                string titleURL = (string)SqlHelper.FromDBNull(row["titleURL"]);
+                slist.Add(titleURL);
+            }
+            return slist;
+        }
 
         /// <summary>
         /// 获取单条信息

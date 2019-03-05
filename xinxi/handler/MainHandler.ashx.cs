@@ -33,12 +33,73 @@ namespace xinxi
                     {
                         case "getmainhtmllist": _strContent.Append(GetMainHtmlInfo(context)); break;
                         case "getcidhtmllist": _strContent.Append(GetCIdHtmlInfo(context)); break;
+                        case "pushbaidu": _strContent.Append(PushBaidu(context)); break;
                         default: break;
                     }
                 }
             }
             context.Response.Write(_strContent.ToString());
         }
+        /// <summary>
+        /// 主动push百度
+        /// </summary>
+        /// <param name="context"></param>
+        /// <returns></returns>
+        public string PushBaidu(HttpContext context)
+        {
+            string count = context.Request["count"];
+            List<string> urlList = bll.GetUrl(int.Parse(count));
+            return PostUrl(urlList);
+        }
+        public static string PostUrl(List<string> urls)
+        {
+            try
+            {
+                string formUrl = "http://data.zz.baidu.com/urls?site=www.16fafa.cn&token=YBFkvfnC8iO0c3Fh";
+
+                string formData = "";
+
+                foreach (string url in urls)
+                {
+                    formData += url + "\n";
+                }
+
+                byte[] postData = System.Text.Encoding.UTF8.GetBytes(formData);
+
+                // 设置提交的相关参数 
+                System.Net.HttpWebRequest request = System.Net.WebRequest.Create(formUrl) as System.Net.HttpWebRequest;
+                System.Text.Encoding myEncoding = System.Text.Encoding.UTF8;
+                request.Method = "POST";
+                request.KeepAlive = false;
+                request.AllowAutoRedirect = true;
+                request.ContentType = "text/plain";
+                request.UserAgent = "curl/7.12.1";
+                request.ContentLength = postData.Length;
+
+                // 提交请求数据 
+                System.IO.Stream outputStream = request.GetRequestStream();
+                outputStream.Write(postData, 0, postData.Length);
+                outputStream.Close();
+
+                System.Net.HttpWebResponse response;
+                System.IO.Stream responseStream;
+                System.IO.StreamReader reader;
+                string srcString;
+                response = request.GetResponse() as System.Net.HttpWebResponse;
+                responseStream = response.GetResponseStream();
+                reader = new System.IO.StreamReader(responseStream, System.Text.Encoding.GetEncoding("UTF-8"));
+                srcString = reader.ReadToEnd();
+                string result = srcString;   //返回值赋值
+                reader.Close();
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
+        }
+
         /// <summary>
         /// 目录首页显示信息
         /// </summary>
