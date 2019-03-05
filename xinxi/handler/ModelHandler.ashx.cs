@@ -89,13 +89,7 @@ namespace xinxi
                 hInfo.articlecontent = content;
                 //hInfo.articlecontent = HttpUtility.UrlDecode(jo["content"].ToString(), Encoding.UTF8);//内容,UrlDecode解码
                 //命名规则：ip/目录/用户名/show_行业id+(五位数id)
-                long htmlId = (bll.GetMaxId() + 1);
-                hInfo.Id = htmlId;
-                string showName = "ashow-" + cid + "-" + htmlId + ".html";
-                url = hostUrl + "/" + username + "/" + showName;
-                hInfo.titleURL = url;
-                //hInfo.titleURL = string.Format("handler/TestHandler.ashx?action=DetailPage&cId={0}&Id={1}", cid, htmlId);
-                //url = host + hInfo.titleURL;
+                hInfo.titleURL = hostUrl + "/" + username + "/ashow-" + cid + "-";
                 hInfo.pinpai = context.Request["pinpai"];
                 hInfo.xinghao = context.Request["xinghao"];
                 hInfo.price = context.Request["price"];
@@ -106,13 +100,12 @@ namespace xinxi
                 hInfo.titleImg = context.Request["thumb"];
                 hInfo.addTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
                 hInfo.username = username;
-                //公司 / 会员信息
-                //cmUserInfo uInfo = bll.GetUser(string.Format("where username='{0}'", username));
                 hInfo.ten_qq = userInfo.ten_qq;
                 hInfo.companyName = userInfo.companyName;
                 hInfo.com_web = userInfo.com_web;
                 //hInfo.realmNameId = "1";//发到哪个站
                 bll.AddHtml(hInfo);//存入数据库
+                url = bll.GetTitleUrl(userInfo.Id.ToString());
                 //调用tool接口，更新userInfo已发条数等信息
                 NetHelper.HttpGet("http://tool.100dh.cn/UserHandler.ashx?action=UpUserPubInformation&userId=" + userInfo.Id, "", Encoding.UTF8);//公共接口，调用user信息
 
