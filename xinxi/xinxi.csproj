@@ -95,9 +95,6 @@
     <Content Include="statics\company\js\jquery.min.js" />
     <Content Include="statics\company\js\slideshow-fx.js" />
     <Content Include="statics\company\js\uikit.min.js" />
-    <Content Include="statics\css\basedev.css" />
-    <Content Include="statics\css\main.css" />
-    <Content Include="statics\css\reset.css" />
     <Content Include="statics\images\logo.jpg" />
     <Content Include="statics\images\logo.png" />
     <Content Include="statics\js\baidujs.js" />
@@ -105,10 +102,7 @@
     <Content Include="templates\company\main.html" />
     <Content Include="templates\sitemap.html" />
     <Content Include="templates\sitemap.xml" />
-    <Content Include="statics\css\images\bdsstyle.css" />
-    <Content Include="statics\css\images\common.css" />
     <Content Include="statics\css\images\style.css" />
-    <Content Include="statics\css\kefu.css" />
     <Content Include="statics\css\skin\style.css" />
     <Content Include="statics\css\style11.css" />
     <Content Include="statics\css\images\type.css" />
@@ -117,10 +111,8 @@
     <Content Include="statics\images\qq.gif" />
     <Content Include="statics\js\base64.min.js" />
     <Content Include="statics\js\skin\gotop.js" />
-    <Content Include="statics\js\gundong.js" />
     <Content Include="statics\js\images\jquery-1.8.0.min.js" />
     <Content Include="statics\js\images\jquery.jslides.js" />
-    <Content Include="statics\js\skin\jquery.min.js" />
     <Content Include="statics\js\images\logger.js" />
     <Content Include="statics\js\images\play.js" />
     <Content Include="statics\js\responsiveslides.min.js" />

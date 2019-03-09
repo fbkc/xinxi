@@ -18,7 +18,7 @@ namespace xinxi
     /// </summary>
     public class TestHandler : IHttpHandler
     {
-        private string hostName = "一路发发";
+        private string hostName = "一路发发网分类资讯";
         private string hostUrl = "http://www.16fafa.cn/hyfl";
         public void ProcessRequest(HttpContext context)
         {
@@ -60,6 +60,8 @@ namespace xinxi
             var data = new
             {
                 htmlTitle = hostName,
+                keyword= "一路发发网分类资讯",
+                description= "一路发发网分类资讯，热门行业资讯。",
                 hostName,
                 hostUrl,
                 columnsList = bll.GetColumns(""),//导航
@@ -132,6 +134,8 @@ namespace xinxi
             var data = new
             {
                 htmlTitle = columnName + "_" + hostName,
+                keyword= "一路发发网"+columnName+"分类资讯",
+                description= columnName+"-一路发发网为您提供"+ columnName + "分类资讯，海量的"+ columnName + "资讯展示",
                 hostName,
                 hostUrl,
                 cId,
