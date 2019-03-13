@@ -19,7 +19,7 @@ namespace xinxi
     public class TestHandler : IHttpHandler
     {
         private string hostName = "一路发发网分类资讯";
-        private string hostUrl = "http://www.16fafa.cn/hyfl";
+        private string hostUrl = "http://www.16fafa.cn/syx";
         public void ProcessRequest(HttpContext context)
         {
             context.Response.ContentType = "text/html";
